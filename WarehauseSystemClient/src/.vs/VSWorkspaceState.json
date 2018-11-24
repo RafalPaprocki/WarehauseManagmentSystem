@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\components",
+    "\\app\\components\\warehause",
+    "\\app\\services",
+    "\\assets",
+    "\\environments"
+  ],
+  "SelectedNode": "\\app\\components\\warehause\\warehause.component.html",
+  "PreviewInSolutionExplorer": false
+}
