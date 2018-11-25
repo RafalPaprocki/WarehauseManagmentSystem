@@ -10,6 +10,11 @@ export class WarehauseComponent implements OnInit {
 
   public warehause:any;
   public warehause2:any;
+  public sectorWidth:number = 10;
+  public sectorHeight:number = 15;
+  Arr = Array;
+  num:number = 20;
+
   constructor(private warehauseService: CardServiceService) { }
 
   ngOnInit() {
