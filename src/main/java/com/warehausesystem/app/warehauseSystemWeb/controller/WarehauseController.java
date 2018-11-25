@@ -34,15 +34,12 @@ public class WarehauseController {
 
     @PostMapping("/listaa")
     @CrossOrigin(origins = "http://localhost:4200")
-    public List<String> listaa(@RequestBody String body, HttpServletResponse response) throws IOException {
-        response.sendRedirect("redirect:http://localhost:4200");
-
+    public List<String> listaa(@RequestBody String body) throws IOException {
         return new ArrayList<String>() {{
             add("A");
             add("B");
             add(body);
         }};
-
     }
 
     private boolean firstTen(User user){
