@@ -1,4 +1,6 @@
 package com.warehausesystem.app.warehauseSystemWeb.repository;
 
-public class KindRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface KindRepository {
 }

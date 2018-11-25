@@ -1,5 +1,9 @@
 package com.warehausesystem.app.warehauseSystemWeb;
 
+import com.warehausesystem.app.warehauseSystemWeb.model.Article;
+import com.warehausesystem.app.warehauseSystemWeb.model.GloveCompartment;
+import com.warehausesystem.app.warehauseSystemWeb.repository.ArticleRepository;
+import com.warehausesystem.app.warehauseSystemWeb.repository.GloveCompartmentRepository;
 import com.warehausesystem.app.warehauseSystemWeb.repository.WarehauseRepository;
 import com.warehausesystem.app.warehauseSystemWeb.model.User;
 import org.springframework.boot.ApplicationRunner;
@@ -21,7 +25,8 @@ public class WarehauseSystemWebApplication extends SpringBootServletInitializer 
 	public static void main(String[] args) {
 		SpringApplication.run(WarehauseSystemWebApplication.class, args); }
 	@Bean
-	ApplicationRunner init(WarehauseRepository repository) {
+	ApplicationRunner init(WarehauseRepository repository, ArticleRepository rep1,
+						   GloveCompartmentRepository rep2) {
 		return args -> {
 			Stream.of("Jan", "Roman", "Rafał", "Jan", "Jon", "Kryk"
 					).forEach(name -> {
@@ -29,7 +34,18 @@ public class WarehauseSystemWebApplication extends SpringBootServletInitializer 
 				user.setUsername(name);
 				repository.save(user);
 			});
+			Article article = new Article();
+			article.setColor("red");
+			article.setDescryption("ołówek cienkopiszący HB");
+			article.setHeigh(10.0);
+			article.setWidth(1.0);
+			article.setName("ołówek");
+			article.setKind("sprzęt biurowy");
+			rep1.save(article);
 			repository.findAll().forEach(System.out::println);
 		};
 	}
+
+
 }
+

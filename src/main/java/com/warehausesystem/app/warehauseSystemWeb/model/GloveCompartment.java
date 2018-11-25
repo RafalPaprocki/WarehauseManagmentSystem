@@ -12,7 +12,9 @@ public class GloveCompartment {
     private Long number;
     private String location;
     private Long articleQuantity;
-
+    @ManyToOne
+    @JoinColumn(name="article_id")
+    private Article article;
     //private Set<Article> articleSet;
 
     public Long getId() {
@@ -45,6 +47,14 @@ public class GloveCompartment {
 
     public void setArticleQuantity(Long articleQuantity) {
         this.articleQuantity = articleQuantity;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
 //    public Set<Article> getArticleSet() {

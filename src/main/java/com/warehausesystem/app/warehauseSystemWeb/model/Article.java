@@ -13,11 +13,14 @@ public class Article {
     private Long id;
     private String kind;
     private String color;
-    private String heigh;
-    private String width;
+    private Double heigh;
+    private Double width;
     private String name;
     private String descryption;
+    private Long quantity;
 
+    @OneToMany(mappedBy = "article")
+    private Set<GloveCompartment> gloveCompartments;
     public Long getId() {
         return id;
     }
@@ -42,19 +45,19 @@ public class Article {
         this.color = color;
     }
 
-    public String getHeigh() {
+    public Double getHeigh() {
         return heigh;
     }
 
-    public void setHeigh(String heigh) {
+    public void setHeigh(Double heigh) {
         this.heigh = heigh;
     }
 
-    public String getWidth() {
+    public Double getWidth() {
         return width;
     }
 
-    public void setWidth(String width) {
+    public void setWidth(Double width) {
         this.width = width;
     }
 
@@ -72,5 +75,13 @@ public class Article {
 
     public void setDescryption(String descryption) {
         this.descryption = descryption;
+    }
+
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
 }

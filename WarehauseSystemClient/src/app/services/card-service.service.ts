@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
   providedIn: 'root'
 })
 export class CardServiceService {
-
+  public id:number;
   constructor(private http: HttpClient) {
   }
 
