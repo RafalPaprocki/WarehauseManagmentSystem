@@ -4,18 +4,17 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "gloveCompartment")
-public class GloveCompartment {
+@Table(name = "compartment")
+public class Compartment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long number;
     private String location;
     private Long articleQuantity;
-    @ManyToOne
-    @JoinColumn(name="article_id")
-    private Article article;
-    //private Set<Article> articleSet;
+
+    @OneToMany(mappedBy = "compartments")
+    private Set<Article> articleSet;
 
     public Long getId() {
         return id;
@@ -49,19 +48,11 @@ public class GloveCompartment {
         this.articleQuantity = articleQuantity;
     }
 
-    public Article getArticle() {
-        return article;
+    public Set<Article> getArticleSet() {
+        return articleSet;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setArticleSet(Set<Article> articleSet) {
+        this.articleSet = articleSet;
     }
-
-//    public Set<Article> getArticleSet() {
-//        return articleSet;
-//    }
-//
-//    public void setArticleSet(Set<Article> articleSet) {
-//        this.articleSet = articleSet;
-//    }
 }

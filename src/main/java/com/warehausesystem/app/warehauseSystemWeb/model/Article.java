@@ -1,9 +1,6 @@
 package com.warehausesystem.app.warehauseSystemWeb.model;
 
-import org.springframework.context.annotation.Primary;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "article")
@@ -19,8 +16,22 @@ public class Article {
     private String descryption;
     private Long quantity;
 
-    @OneToMany(mappedBy = "article")
-    private Set<GloveCompartment> gloveCompartments;
+    @ManyToOne
+    @JoinColumn(name="compartment_id")
+    private Compartment compartments;
+
+    public Article(Long id, String kind, String kolor, Double heigh, Double width,
+                   String name, String descryption, Long quantity, Compartment comp){
+        this.id = id;
+        this.kind = kind;
+        this.color = kolor;
+        this.heigh = heigh;
+        this.width = width;
+        this.name = name;
+        this.descryption = descryption;
+        this.quantity = quantity;
+        this.compartments = comp;
+    }
     public Long getId() {
         return id;
     }
@@ -83,5 +94,13 @@ public class Article {
 
     public void setQuantity(Long quantity) {
         this.quantity = quantity;
+    }
+
+    public Compartment getCompartments() {
+        return compartments;
+    }
+
+    public void setCompartments(Compartment compartments) {
+        this.compartments = compartments;
     }
 }

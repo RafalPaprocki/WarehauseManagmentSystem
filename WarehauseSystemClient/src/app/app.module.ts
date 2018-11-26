@@ -7,12 +7,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { WarehauseComponent } from './components/warehause/warehause.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DetailProductComponent } from './components/detail-product/detail-product.component';
+import { AddArticleComponent } from './components/add-article/add-article.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WarehauseComponent,
-    DetailProductComponent
+    DetailProductComponent,
+    AddArticleComponent
   ],
   imports: [
     BrowserModule,

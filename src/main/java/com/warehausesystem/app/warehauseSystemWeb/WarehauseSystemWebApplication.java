@@ -1,9 +1,9 @@
 package com.warehausesystem.app.warehauseSystemWeb;
 
 import com.warehausesystem.app.warehauseSystemWeb.model.Article;
-import com.warehausesystem.app.warehauseSystemWeb.model.GloveCompartment;
+import com.warehausesystem.app.warehauseSystemWeb.model.Compartment;
 import com.warehausesystem.app.warehauseSystemWeb.repository.ArticleRepository;
-import com.warehausesystem.app.warehauseSystemWeb.repository.GloveCompartmentRepository;
+import com.warehausesystem.app.warehauseSystemWeb.repository.CompartmentRepository;
 import com.warehausesystem.app.warehauseSystemWeb.repository.WarehauseRepository;
 import com.warehausesystem.app.warehauseSystemWeb.model.User;
 import org.springframework.boot.ApplicationRunner;
@@ -13,6 +13,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @SpringBootApplication
@@ -26,7 +28,7 @@ public class WarehauseSystemWebApplication extends SpringBootServletInitializer 
 		SpringApplication.run(WarehauseSystemWebApplication.class, args); }
 	@Bean
 	ApplicationRunner init(WarehauseRepository repository, ArticleRepository rep1,
-						   GloveCompartmentRepository rep2) {
+						   CompartmentRepository rep2) {
 		return args -> {
 			Stream.of("Jan", "Roman", "Rafał", "Jan", "Jon", "Kryk"
 					).forEach(name -> {
@@ -34,14 +36,19 @@ public class WarehauseSystemWebApplication extends SpringBootServletInitializer 
 				user.setUsername(name);
 				repository.save(user);
 			});
-			Article article = new Article();
-			article.setColor("red");
-			article.setDescryption("ołówek cienkopiszący HB");
-			article.setHeigh(10.0);
-			article.setWidth(1.0);
-			article.setName("ołówek");
-			article.setKind("sprzęt biurowy");
-			rep1.save(article);
+
+			Compartment comp2 = new Compartment();
+			Set articlesA = new HashSet<Article>(){{
+				add (new Article(Long.parseLong("12"),"biurowy", "czarny" ,
+						23.0,34.0,"ołówek","ołowek hb", Long.parseLong("2"),
+						comp2));
+				add (new Article(Long.parseLong("11"),"biurowy", "zielony" ,
+						23.0,34.0,"ołówek","ołowek hb", Long.parseLong("2"),
+						comp2));
+			}};
+			comp2.setArticleSet(articlesA);
+
+			rep2.save(comp2);
 			repository.findAll().forEach(System.out::println);
 		};
 	}

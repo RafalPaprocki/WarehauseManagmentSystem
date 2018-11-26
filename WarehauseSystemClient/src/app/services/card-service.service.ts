@@ -19,4 +19,8 @@ export class CardServiceService {
     return this.http.post('//localhost:8888/listaa/', body);
   }
 
+  getArticles(id:string): Observable<any>{
+    return this.http.get('//localhost:8888/articles/' + id);
+  }
+
 }

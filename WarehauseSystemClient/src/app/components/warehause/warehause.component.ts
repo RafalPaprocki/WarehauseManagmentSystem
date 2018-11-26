@@ -18,13 +18,13 @@ export class WarehauseComponent implements OnInit {
   constructor(private warehauseService: CardServiceService) { }
 
   ngOnInit() {
-    this.warehauseService.getAll('87').subscribe(data => {
+    this.warehauseService.getAll('9').subscribe(data => {
       this.warehause = data;
     });
 
     this.warehauseService.sendPost("sad").subscribe(data => {
       this.warehause2 = data;
-    })
+    });
   }
 
 }

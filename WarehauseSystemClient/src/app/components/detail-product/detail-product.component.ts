@@ -8,13 +8,20 @@ import {CardServiceService} from '../../services/card-service.service';
   styleUrls: ['./detail-product.component.css']
 })
 export class DetailProductComponent implements OnInit {
-
-  constructor(private route: ActivatedRoute, private articleService: CardServiceService) { }
+  public articles;
+  constructor(private warehauseService: CardServiceService,
+              private route: ActivatedRoute,
+              private articleService: CardServiceService) { }
 
   ngOnInit() {
-    debugger
+
     const id = +this.route.snapshot.paramMap.get('id');
     this.articleService.id = id;
+
+    this.warehauseService.getArticles(this.articleService.id.toString()).subscribe(data => {
+      debugger
+      this.articles = data;
+    });
   }
 
 }
