@@ -1,0 +1,26 @@
+.bg-light{
+  background-color: #0101ff9c !important;
+}
+.background{
+  min-height: 100vh;
+  background-image: url("../assets/footer_lodyas.png");
+}
+
+.compartment-list-elem{
+  min-height: 80px;
+  padding: 4px;
+  background-color: aliceblue;
+  width:100%;
+  margin-bottom:9px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px -1px rgba(0,0,0,0.75);
+}
+
+.btn-proceed{
+  float: right;
+  height: 25px;
+  font-size: 9px;
+  padding: 6px;
+  margin-top: -49px;
+  margin-right: 2px;
+}

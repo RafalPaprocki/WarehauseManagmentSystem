@@ -2,26 +2,53 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { CardServiceService } from './services/card-service.service'
+import { ArticleService } from './services/article.service'
 import { HttpClientModule } from '@angular/common/http';
 import { WarehauseComponent } from './components/warehause/warehause.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DetailProductComponent } from './components/detail-product/detail-product.component';
 import { AddArticleComponent } from './components/add-article/add-article.component';
+import { FormsModule } from '@angular/forms';
+import {BsModalService, ModalModule} from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { AccordionModule } from 'ngx-bootstrap/accordion'
+import {ComponentLoaderFactory, PositioningService} from "ngx-bootstrap";
+import { ArticlesListComponent } from './components/articles-list/articles-list.component';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {ToastModule} from 'primeng/toast';
+import {ToastrService} from "./services/toastr.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     WarehauseComponent,
     DetailProductComponent,
-    AddArticleComponent
+    AddArticleComponent,
+    ArticlesListComponent
   ],
   imports: [
     BrowserModule,
      HttpClientModule,
-     AppRoutingModule
+     AppRoutingModule,
+     FormsModule,
+    BrowserAnimationsModule,
+    ConfirmDialogModule,
+    AutoCompleteModule,
+    ToastModule,
+    AccordionModule.forRoot(),
+    ModalModule.forRoot(),
+
   ],
-  providers: [CardServiceService],
+  providers: [
+    BsModalService,
+    ArticleService,
+    ConfirmationService,
+    MessageService,
+    ToastrService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,21 @@
+.input, label{
+  display:block;
+}
+
+ul{
+  margin:0px;
+  padding:0px;
+}
+
+li{
+  list-style-type: none;
+  background-color: white;
+  cursor:pointer;
+}
+
+.button-option{
+  padding: 0.175rem .65rem;
+  font-size: 0.5rem;
+}
+
+

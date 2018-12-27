@@ -1,10 +1,9 @@
 export class ArticleModel {
+  id?: number;
   name: String;
   kind: any;
-  quantity: number;
-  lokalization: any;
   color: String;
   width: String;
-  height: String;
-  description: String;
+  heigh: String;
+  descryption: String;
 }

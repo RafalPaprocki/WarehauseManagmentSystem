@@ -1,54 +1,64 @@
-<div class="container">
-  <form >
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Nazwa przedmiotu</label>
-      <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="np. laptop">
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlKind">Rodzaj</label>
-      <select class="form-control" id="exampleFormControlKind">
-        <option>sprzęt biurowy</option>
-        <option>rtv</option>
-        <option>agd</option>
-        <option>artykuły budowlane</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlSelect1">Ilość</label>
-      <select class="form-control" id="exampleFormControlSelect1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        <option>7</option>
-        <option>8</option>
-      </select>
-    </div>
+<div style = "background-color: #555f5f; width:80%;
+    margin-left:auto; margin-right:auto; height: 100%" >
+  <div class="container" style = "max-width:50%">
+    <form>
+      <div class="form-group" >
+        <label for="exampleFormControlInput1">Nazwa przedmiotu</label>
+        <input [(ngModel)] = "article.name" type="text" class="form-control" id="exampleFormControlInput1"
+               placeholder="np. laptop" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlKind">Rodzaj</label>
+        <select [(ngModel)] = "article.kind" class="form-control" id="exampleFormControlKind" [ngModelOptions]="{standalone: true}">
+          <option>sprzęt biurowy</option>
+          <option>komputery i laptopy</option>
+          <option>telefony</option>
+          <option>monitory</option>
+          <option>artykuły budowlane</option>
+        </select>
+      </div>
 
-    <div class="form-group">
-      <label for="exampleFormControlLocalize">Lokalizacja</label>
-      <input type="text" class="form-control" id="exampleFormControlLocalize" placeholder="np.Sektor A, 23">
-    </div>
-
-    <div class="form-group">
-      <label for="exampleFormControlColor">Kolor</label>
-      <input type="text" class="form-control" id="exampleFormControlColor" placeholder="opcjonalnie">
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlWidth">Szerokość</label>
-      <input type="text" class="form-control" id="exampleFormControlWidth" placeholder="opcjonalnie">
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlHeigh">Wysokość</label>
-      <input type="text" class="form-control" id="exampleFormControlHeigh" placeholder="opcjonalnie">
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">Dodatkowy opis</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
+     <!-- <div class="form-group">
+        <select style = "max-height:100px"  [(ngModel)] = "article.kind" class="form-control" id="formControlLocate" [ngModelOptions]="{standalone: true}">
+          <option>Sektor A magazyn 1</option>
+          <option>Sektor B magazyn 2</option>
+          <option>Sektor C magazyn 3</option>
+          <option>Sektor D magazyn 4</option>
+          <option>Sektor E magazyn 5</option>
+          <option>Sektor A magazyn 3</option>
+        </select>
+       </div>
+      -->
+  <div class="form-group">
+    <label for="exampleFormControlColor">Kolor</label>
+    <input  [(ngModel)]="article.color" type="text" class="form-control"
+            id="exampleFormControlColor" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlWidth">Szerokość</label>
+    <input [(ngModel)]="article.width" type="number" class="form-control"
+           id="exampleFormControlWidth" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlHeigh">Wysokość</label>
+    <input [(ngModel)]="article.heigh" type="number"
+           class="form-control" id="exampleFormControlHeigh"
+           placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Dodatkowy opis</label>
+    <textarea [(ngModel)]="article.descryption" class="form-control"
+              id="exampleFormControlTextarea1" rows="3" [ngModelOptions]="{standalone: true}"></textarea>
+  </div>
+      <div  class="form-group">
+      <button style = "margin-bottom:50px; width:100px" type="submit" class="btn btn-primary" (click)="addArticle()">Dodaj</button>
+      </div>
   </form>
 
-  <button style = "float:right;margin-bottom: 30px; width:100px" type="submit" class="btn btn-primary">Dodaj</button>
+
+  </div>
+
 </div>
+
+<div *ngIf = "added" class = "succed-add">Pomyślnie dodano nowy artykuł</div>
+

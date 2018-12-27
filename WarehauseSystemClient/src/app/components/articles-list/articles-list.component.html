@@ -1,0 +1,119 @@
+
+<div class = "row" style = "margin-right:0px; margin-left:0px">
+  <div class = "col-3" style=" text-align: center;background-color:#b9b9b9;  height: 110vh;">
+    <div style = "margin-left:15%">
+      <label class = "filter_label" for="articleId">Id</label>
+      <input  [(ngModel)]="articleModel.id" type="text" class = "form-control" style="width:90%"
+              id="articleId" placeholder="np.5" [ngModelOptions]="{standalone: true}"
+              (ngModelChange)="filtrArticlesList()">
+      <label for="articleName">Nazwa</label>
+      <input  [(ngModel)]="articleModel.name" type="text" class = "form-control" style="width:90%"
+              id="articleName" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}"
+              (ngModelChange)="filtrArticlesList()">
+      <label for="articleKind">Rodzaj</label>
+      <input  [(ngModel)]="articleModel.kind" type="text" class = "form-control" style="width:90%"
+              id="articleKind" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}"
+              (ngModelChange)="filtrArticlesList()">
+      <label for="articleColor">Kolor</label>
+      <input  [(ngModel)]="articleModel.color" type="text" class = "form-control" style="width:90%"
+              id="articleColor" placeholder="np.czarny"
+              (ngModelChange)="filtrArticlesList()">
+    </div>
+  </div>
+  <div class = "col-9" style="margin:0px;padding-right:0px">
+    <div style = "width:100%; min-height: 110vh">
+      <ul style="background-color: black">
+        <li *ngFor="let article of allArticles" style = "width:100%; min-height: 70px; margin-bottom:2px; ">
+          <div style = "background-color: green;position: absolute">ID = {{article.id}}</div>
+          <div style="display:flex; flex-wrap: wrap">
+            <div style="margin-left:100px; width:15%">{{article.name}}</div>
+            <div style="margin-left:100px; ">Rodzaj: {{article.kind}}</div>
+          </div>
+          <div style="width:100%;display:flex; font-size: 10px; justify-content: center">
+            <div style="margin-left:10px;">Kolor: {{article.color}}</div>
+            <div style="margin-left:10px; ">Wysokokość: {{article.width}}</div>
+            <div style="margin-left:10px; ">Szerokość: {{article.heigh}}</div>
+            <div style="margin-left:10px;">Dodatkowe informacje: {{article.descryption}}</div>
+          </div>
+          <div style="display: flex; justify-content: flex-end ;align-items:flex-end;margin-top:12px">
+            <button class = "btn btn-success button-option" (click)="openModal(template)">Dodaj</button>
+            <button class = "btn btn-warning button-option" (click)="aa(article)" (click)="openModal(template2)">Edytuj</button>
+            <button class = "btn btn-danger button-option" (click)="aa(article)" (click)="openModal(template3)">Usuń</button>
+          </div>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #template >
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="font-size: 16px">Ile przedmiotów dodać?</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input [(ngModel)]="quantity" type="number" class="form-control"
+           id="exampleFormControlWidth" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}">
+    <button class = "btn btn-primary mt-3" style="float:right; width:100%"  (click)="modalRef.hide()">
+      Dodaj
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #template2 >
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="font-size: 16px">Id artykułu: {{articleEdit.id}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <label for="article-edit-name">Nazwa</label>
+    <input [(ngModel)]="articleEdit.name" type="text" class="form-control"
+           id="article-edit-name"  [ngModelOptions]="{standalone: true}">
+    <label for="article-edit-kind">Rodzaj</label>
+    <input [(ngModel)]="articleEdit.kind" type="text" class="form-control"
+           id="article-edit-kind"  [ngModelOptions]="{standalone: true}">
+    <label for="article-edit-color">Kolor</label>
+    <input [(ngModel)]="articleEdit.color" type="text" class="form-control"
+           id="article-edit-color" [ngModelOptions]="{standalone: true}">
+    <label for="article-edit-width">Szerokość</label>
+    <input [(ngModel)]="articleEdit.width" type="text" class="form-control"
+           id="article-edit-width" [ngModelOptions]="{standalone: true}">
+    <label for="article-edit-heigh">Wysokość</label>
+    <input [(ngModel)]="articleEdit.heigh" type="text" class="form-control"
+           id="article-edit-heigh" [ngModelOptions]="{standalone: true}">
+    <label for="article-edit-descryption">Opis</label>
+    <textarea [(ngModel)]="articleEdit.descryption" type="text" class="form-control"
+              id="article-edit-descryption" [ngModelOptions]="{standalone: true}"></textarea>
+  </div>
+
+  <div class="modal-footer">
+    <button class = "btn btn-success" style="float:right; width:100%" (click)="updateArticle()" (click)="modalRef.hide()">
+      Edytuj
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #template3 >
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="font-size: 16px">Czy napewno chcesz usunąć przedmit {{articleEdit.name}}
+      o Id: {{articleEdit.id}} ?</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <button class = "btn btn-primary " style="float:left; width:40%" (click)="deleteArticle(articleEdit.id)" (click)="modalRef.hide()">
+        Tak
+      </button>
+      <button class = "btn btn-success" style="float:right; width:40%"  (click)="modalRef.hide()">
+        Nie
+      </button>
+    </div>
+  </div>
+</ng-template>
+

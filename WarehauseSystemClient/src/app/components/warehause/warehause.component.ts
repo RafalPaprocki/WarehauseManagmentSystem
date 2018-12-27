@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CardServiceService } from '../../services/card-service.service'
+import { ArticleService } from '../../services/article.service'
 
 @Component({
   selector: 'app-warehause',
@@ -13,18 +13,17 @@ export class WarehauseComponent implements OnInit {
   public sectorWidth:number = 10;
   public sectorHeight:number = 15;
   Arr = Array;
-  num:number = 20;
+  num:number = 10;
+  input = 'ijkk';
 
-  constructor(private warehauseService: CardServiceService) { }
+  constructor(private warehauseService: ArticleService) { }
 
   ngOnInit() {
     this.warehauseService.getAll('9').subscribe(data => {
       this.warehause = data;
     });
-
-    this.warehauseService.sendPost("sad").subscribe(data => {
-      this.warehause2 = data;
-    });
+    document.getElementById('#divek');
+    debugger
   }
 
 }

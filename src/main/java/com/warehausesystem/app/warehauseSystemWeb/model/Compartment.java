@@ -1,20 +1,29 @@
 package com.warehausesystem.app.warehauseSystemWeb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.Set;
 
+//tylko jeden artykuł danego rodzaju
 @Entity
-@Table(name = "compartment")
+@Table(name = "compartments")
 public class Compartment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long number;
     private String location;
     private Long articleQuantity;
 
-    @OneToMany(mappedBy = "compartments")
-    private Set<Article> articleSet;
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "article_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Article article;
 
     public Long getId() {
         return id;
@@ -48,11 +57,12 @@ public class Compartment {
         this.articleQuantity = articleQuantity;
     }
 
-    public Set<Article> getArticleSet() {
-        return articleSet;
+    public Article getArticle() {
+        return article;
     }
 
-    public void setArticleSet(Set<Article> articleSet) {
-        this.articleSet = articleSet;
+    public void setArticle(Article article) {
+        this.article = article;
     }
+
 }
