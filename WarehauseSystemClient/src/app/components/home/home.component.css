@@ -12,6 +12,7 @@
 
 .vertical-sector:hover{
   background-color: lightgray;
+  cursor: pointer;
 }
 
 .horizontal-sector{
@@ -21,6 +22,7 @@
   margin-bottom:20px;
   text-align: center;
   line-height:60px;
+  cursor: pointer;
 }
 
 .horizontal-sector:hover{
@@ -32,25 +34,30 @@
   flex-direction: column;
   width:64%;
   margin-right: 2%;
+  cursor: pointer;
 }
 
 .text{
   transform: rotate(-90deg);
-  position:absolute;
-  left: 11.5%;
+  position:relative;
+  left: 0%;
   top: 42%;
+  cursor: pointer;
 }
 
 .text2{
   transform: rotate(90deg);
-  position:absolute;
-  left: 74.2%;
-  top: 42%;
+  position:relative;
+  left: 0%;
+  top: 52%;
+  cursor: pointer;
+
 }
 
 .text3{
   transform: rotate(90deg);
-  position:absolute;
-  left: 83.7%;
-  top: 42%;
+  position:relative;
+  left: 0%;
+  top: 52%;
+  cursor: pointer;
 }

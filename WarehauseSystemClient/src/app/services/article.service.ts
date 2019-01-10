@@ -23,8 +23,8 @@ export class ArticleService {
     return this.http.get('//localhost:8888/article/' + id);
   }
 
-  getArticleInCompartment(compartmentId:string): Observable<any>{
-    return this.http.get('//localhost:8888/compartments/get/article/' + compartmentId);
+  getArticleInCompartment(sector:string, id:string): Observable<any>{
+    return this.http.get('//localhost:8888/compartments/get/article/' + sector + '/' + id);
   }
 
   getAllArticles(): Observable<any>{

@@ -17,9 +17,13 @@ export class WarehauseComponent implements OnInit {
   Arr = Array;
   num:number = 10;
   input = 'ijkk';
+  timer;
+  hoveredElemSector;
+  hoveredElemNumber;
+
 
   constructor(private route: ActivatedRoute, private warehauseService: ArticleService) {
-}
+  }
 
   ngOnInit() {
     this.sectorWidth = +this.route.snapshot.paramMap.get('width');
@@ -32,5 +36,26 @@ export class WarehauseComponent implements OnInit {
 
   }
 
+  displayContentInCart(compartment, num, sec){
+    this.timer = setTimeout(() =>
+      {
+        let elm = document.getElementById("cart");
+
+        elm.style.top =  String(compartment.pageY - 250) + "px";
+        elm.style.left = String(compartment.pageX - 100) + "px";
+        elm.style.visibility = "visible"
+        this.hoveredElemSector = sec;
+        this.hoveredElemNumber = num;
+      },
+      700);
+  }
+
+  unvisibleCart(){
+    clearTimeout(this.timer)
+    let elm = document.getElementById("cart");
+    elm.style.visibility = "hidden"
+    this.hoveredElemSector = undefined;
+    this.hoveredElemNumber = undefined;
+  }
 
 }

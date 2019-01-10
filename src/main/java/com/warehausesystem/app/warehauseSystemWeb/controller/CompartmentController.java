@@ -6,6 +6,7 @@ import com.warehausesystem.app.warehauseSystemWeb.model.Compartment;
 import com.warehausesystem.app.warehauseSystemWeb.model.Sector;
 import com.warehausesystem.app.warehauseSystemWeb.repository.ArticleRepository;
 import com.warehausesystem.app.warehauseSystemWeb.repository.CompartmentRepository;
+import com.warehausesystem.app.warehauseSystemWeb.repository.SectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,14 +27,19 @@ public class CompartmentController {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private SectorRepository sectorRepository;
+
     @GetMapping("/compartments")
     public Page<Compartment> getAllComponents(Pageable pageable){
         return compartmentRepository.findAll(pageable);
     }
 
-    @GetMapping("/compartment/{id}")
-    public Optional<Compartment> getCompartmentById(@PathVariable Long id){
-        return compartmentRepository.findById(id);
+    @GetMapping("/compartment/{id}/{sector}")
+    public Compartment getCompartmentById(@PathVariable Long id, @PathVariable String sector){
+        Sector sec = sectorRepository.findBySector("Sektor " + sector);
+        Compartment comp = compartmentRepository.findBySectorIdAndNumber(sec.getId(),id ).get(0);
+        return comp;
     }
 
     @GetMapping("/add/article/{articleId}")
@@ -48,21 +54,16 @@ public class CompartmentController {
         for(Compartment i : compartments){
 
         }
-
-        Sector sd = new Sector();
-        sd.setId(Long.parseLong("2"));
-        sd.setSector("SectorA");
-
-            Compartment c = new Compartment();
-            c.setArticleQuantity(Long.parseLong("0"));
-            c.setArticle(null);
-            c.setSector(sd);
-            c.setNumber(new Long(1));
-
-            compartmentRepository.save(c);
-
-
         System.out.println("asdased");
+    }
+
+    @GetMapping("/compartments/get/article/{sector}/{number}")
+    public Article getArticleInCompartmentWithSector(@PathVariable(value = "sector") String sectorName,
+                                                               @PathVariable(value = "number") Long number) {
+        Sector sec = sectorRepository.findBySector("Sektor " + sectorName);
+       List<Compartment> a = compartmentRepository.findBySectorIdAndNumber(sec.getId(), number);
+       Compartment comp = a.get(0);
+       return comp.getArticle();
     }
 
     @GetMapping("/compartments/get/article/{compartmentId}")
@@ -77,6 +78,7 @@ public class CompartmentController {
         }).orElseThrow(() -> new ResourceNotFoundException("CompartmentId "  + compartmentId + " not found"));
     }
 
+
     @GetMapping("/compartments/{articleId}")
     @CrossOrigin(origins = "http://localhost:4200")
     public List<Compartment> getAllCompartmentsByArticleId(@PathVariable(value = "articleId") Long articleId,
@@ -84,12 +86,13 @@ public class CompartmentController {
         return compartmentRepository.findByArticleId(articleId);
     }
 
-    @PutMapping("/compartment/add/article/{quantity}/{id}")
-    public Compartment updateCompartment(@PathVariable Long quantity,@PathVariable Long id, @Valid @RequestBody Compartment compartmentObj) {
-        return compartmentRepository.findById(id).map(compartment -> {
-           compartment.setArticleQuantity(compartment.getArticleQuantity() + quantity);
-            return compartmentRepository.save(compartment);
-        }).orElseThrow(() -> new ResourceNotFoundException("Magazyn o id " + id + " nie został znaleziony"));
+    @GetMapping("/compartment/add/article/{quantity}/{id}/{sector}")
+    public Compartment updateCompartment(@PathVariable Long quantity, @PathVariable Long id,
+                                         @PathVariable String sector) {
+        Sector sec = sectorRepository.findBySector("Sektor " + sector);
+        Compartment comp = compartmentRepository.findBySectorIdAndNumber(sec.getId(), id).get(0);
+        comp.setArticleQuantity(comp.getArticleQuantity() + quantity);
+        return compartmentRepository.save(comp);
     }
 
 }

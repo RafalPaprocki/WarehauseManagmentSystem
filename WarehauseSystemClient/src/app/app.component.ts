@@ -38,7 +38,7 @@ export class AppComponent {
   findArticleLocalization(article){
     this.articleService.findCompartmentsWithArticle(article.id.toString()).subscribe(data => {
       this.compartments = data;
-      console.log(this.compartments)
+      console.log( this.compartments)
     })
     this.findArticleName = "";
 
@@ -51,10 +51,12 @@ export class AppComponent {
     );
   }
 
-  refresh(id){
-    this.router.navigateByUrl('/warehauseComponent', {skipLocationChange: true}).then(()=>
-      this.router.navigate(['/', 'detail' , id.toString()]));
+  refresh(number, sector){
+    let sec = sector.toString().split(' ')[1];
+    this.router.navigateByUrl('/home', {skipLocationChange: true}).then(()=>
+      this.router.navigate(['/', 'detail' , number.toString(), sec]));
   }
 
 
 }
+

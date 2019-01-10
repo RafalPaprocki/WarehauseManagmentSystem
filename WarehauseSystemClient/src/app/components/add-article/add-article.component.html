@@ -1,63 +1,66 @@
 <div style = "background-color: #555f5f; width:80%;
     margin-left:auto; margin-right:auto; height: 100%" >
   <div class="container" style = "max-width:50%">
-    <form>
+    <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
       <div class="form-group" >
-        <label for="exampleFormControlInput1">Nazwa przedmiotu</label>
-        <input [(ngModel)] = "article.name" type="text" class="form-control" id="exampleFormControlInput1"
-               placeholder="np. laptop" [ngModelOptions]="{standalone: true}">
+        <label for="artname">Nazwa przedmiotu</label>
+        <input [(ngModel)] = "article.name" type="text" class="form-control" name="artname"
+               placeholder="np. laptop" [ngModelOptions]="{standalone: true}"  #artname="ngModel"  required>
+        <div *ngIf="f.submitted && artname.invalid">
+          <div *ngIf="artname.errors.required" class="invalid">Proszę podać nazwę przedmiotu</div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="exampleFormControlKind">Rodzaj</label>
-        <select [(ngModel)] = "article.kind" class="form-control" id="exampleFormControlKind" [ngModelOptions]="{standalone: true}">
+        <label for="kind">Rodzaj</label>
+        <select [(ngModel)] = "article.kind" class="form-control" name="kind" [ngModelOptions]="{standalone: true}" #kind="ngModel" required>
           <option>sprzęt biurowy</option>
           <option>komputery i laptopy</option>
           <option>telefony</option>
           <option>monitory</option>
           <option>artykuły budowlane</option>
         </select>
+        <div *ngIf="f.submitted && kind.invalid">
+          <div *ngIf="kind.errors.required" class="invalid">Proszę podać rodzaj przedmiotu</div>
+        </div>
       </div>
 
-     <!-- <div class="form-group">
-        <select style = "max-height:100px"  [(ngModel)] = "article.kind" class="form-control" id="formControlLocate" [ngModelOptions]="{standalone: true}">
-          <option>Sektor A magazyn 1</option>
-          <option>Sektor B magazyn 2</option>
-          <option>Sektor C magazyn 3</option>
-          <option>Sektor D magazyn 4</option>
-          <option>Sektor E magazyn 5</option>
-          <option>Sektor A magazyn 3</option>
-        </select>
-       </div>
-      -->
-  <div class="form-group">
-    <label for="exampleFormControlColor">Kolor</label>
-    <input  [(ngModel)]="article.color" type="text" class="form-control"
-            id="exampleFormControlColor" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlWidth">Szerokość</label>
-    <input [(ngModel)]="article.width" type="number" class="form-control"
-           id="exampleFormControlWidth" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlHeigh">Wysokość</label>
-    <input [(ngModel)]="article.heigh" type="number"
-           class="form-control" id="exampleFormControlHeigh"
-           placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Dodatkowy opis</label>
-    <textarea [(ngModel)]="article.descryption" class="form-control"
-              id="exampleFormControlTextarea1" rows="3" [ngModelOptions]="{standalone: true}"></textarea>
-  </div>
+      <!-- <div class="form-group">
+         <select style = "max-height:100px"  [(ngModel)] = "article.kind" class="form-control" id="formControlLocate" [ngModelOptions]="{standalone: true}">
+           <option>Sektor A magazyn 1</option>
+           <option>Sektor B magazyn 2</option>
+           <option>Sektor C magazyn 3</option>
+           <option>Sektor D magazyn 4</option>
+           <option>Sektor E magazyn 5</option>
+           <option>Sektor A magazyn 3</option>
+         </select>
+        </div>
+       -->
+      <div class="form-group">
+        <label for="color">Kolor</label>
+        <input   [(ngModel)]="article.color" type="text" class="form-control"
+                 id="color" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}" #color="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="width">Szerokość</label>
+        <input [(ngModel)]="article.width" type="number" class="form-control"
+               id="width" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}" #width="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="heigh">Wysokość</label>
+        <input [(ngModel)]="article.heigh" type="number"
+               class="form-control" id="exampleFormControlHeigh"
+               placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}" #heigh="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Dodatkowy opis</label>
+        <textarea [(ngModel)]="article.descryption" class="form-control"
+                  id="exampleFormControlTextarea1" rows="3" [ngModelOptions]="{standalone: true}"></textarea>
+      </div>
       <div  class="form-group">
-      <button style = "margin-bottom:50px; width:100px" type="submit" class="btn btn-primary" (click)="addArticle()">Dodaj</button>
+        <button style = "margin-bottom:50px; width:100px" type="submit" class="btn btn-primary" (click)="addArticle(kind.invalid, artname.invalid)">Dodaj</button>
       </div>
-  </form>
-
-
+    </form>
   </div>
-
 </div>
 
 <div *ngIf = "added" class = "succed-add">Pomyślnie dodano nowy artykuł</div>

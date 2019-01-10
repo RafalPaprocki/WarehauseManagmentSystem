@@ -1,38 +1,45 @@
-
 <!-- 10x15 -->
 
 <div *ngIf="sectorWidth === 10 && sectorHeight === 15 ">
-  <div class="background">
-  <div style = "text-align: center;" class = "mb-2"><b>Mapa magazynu sektor {{sectorName}}</b></div>
-  <div class = "container pt-2" style = "text-align:center; background-color:transparent; min-height:90vh; height:100%">
+  <div class="background pt-2" style="display: block;
+overflow: auto;">
+    <div style = "text-align: center; color:beige" class = " mb-2"><b>Mapa magazynu sektor {{sectorName}}</b></div>
+    <div class = "container pt-4" style = "text-align:center; background-color:transparent; min-height:90vh; ">
 
-    <div *ngFor = "let k of Arr(sectorHeight); let j = index;">
-      <div style="text-align: center" *ngFor = "let k of Arr(sectorWidth).fill(1); let i = index">
-        <div class = "cls" routerLink="/detail/{{1 + j*sectorWidth + i}}"
-             style = "cursor: pointer; height: 40px; margin-left:0.25%; margin-bottom:4px;background-color:green; float:left">{{1 + j*sectorWidth + i}}</div>
+      <div *ngFor = "let k of Arr(sectorHeight); let j = index;">
+        <div style="text-align: center" *ngFor = "let k of Arr(sectorWidth).fill(1); let i = index">
+          <div class = "cls asd" routerLink="/detail/{{1 + j*sectorWidth + i}}/{{sectorName}}"
+               style = "cursor: pointer; height: 40px; margin-left:0.25%; margin-bottom:4px;
+                     float:left ;color:lightgray" (mouseenter)="displayContentInCart($event,1 + j*sectorWidth + i, sectorName)"
+               (mouseleave)="unvisibleCart()" >{{1 + j*sectorWidth + i}}
+          </div>
+        </div>
       </div>
     </div>
-
-    <button style = "margin-left:10px" class="btn btn-warning" (click)="name()">Bootstrap Button</button>
-  </div>
   </div>
 </div>
 
 <!-- 10x10 -->
 
 <div *ngIf="sectorWidth === 8 && sectorHeight === 10 ">
-  <div class="background">
-    <div style = "text-align: center;" class = "mb-2"><b>Mapa magazynu sektor {{sectorName}}</b></div>
-
+  <div class="background pt-4">
+    <div style = "text-align: center; color:beige" class = "mb-2"><b>Mapa magazynu sektor {{sectorName}}</b></div>
     <div class = "container pt-2" style = "text-align:center; background-color:transparent; min-height:50vh; height:100%">
-
       <div *ngFor = "let k of Arr(sectorHeight); let j = index;">
         <div style="text-align: center" *ngFor = "let k of Arr(sectorWidth).fill(1); let i = index">
-          <div  routerLink="/detail/{{1 + j*sectorWidth + i}}"
-               class="one-compartment">{{1 + j*sectorWidth + i}}</div>
+          <div  routerLink="/detail/{{1 + j*sectorWidth + i}}/{{sectorName}}"
+                class="one-compartment" (mouseenter)="displayContentInCart($event,1 + j*sectorWidth + i, sectorName)"
+                (mouseleave)="unvisibleCart()" >{{1 + j*sectorWidth + i}}</div>
         </div>
       </div>
-
     </div>
   </div>
+</div>
+
+<!-- card -->
+
+<div id="cart" class = "card" style="background-color: rgb(227, 240, 227); width:150px;height:250px; ">
+  Sektor {{hoveredElemSector}}
+  <br>
+  Numer skrytki: {{hoveredElemNumber}}
 </div>

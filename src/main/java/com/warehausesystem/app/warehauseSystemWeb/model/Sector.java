@@ -21,12 +21,6 @@ public class Sector {
     @NotNull
     private Integer heigh;
 
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL,
-            mappedBy = "sector")
-    private Compartment compartment;
-
-
     public Long getId() {
         return id;
     }

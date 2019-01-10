@@ -1,90 +1,92 @@
-<!--The content below is only a placeholder and can be replaced.-->
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" style="z-index: 1000">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a style = "font-size: 22px; color:white; text-decoration: none" routerLink="home" >Zarządzanie magazynem <span class="sr-only"></span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"> <a routerLink="home" style = "color:black">Widok magazynu</a>
+        <a class="nav-link "> <a class="menu-item" routerLink="home" routerLinkActive="active-link">Widok magazynu</a>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"> <a routerLink="article/list" style = "color:black" >Lista artykułów</a>
+        <a class="nav-link "> <a class="menu-item" routerLink="article/list" routerLinkActive="active-link">Lista artykułów</a>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"> <a routerLink="article/add" style = "color:black" >Dodaj artykuł</a>
+        <a class="nav-link"> <a class="menu-item" routerLink="article/add" routerLinkActive="active-link">Nowy artykuł</a>
         </a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Jan Jan
+
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0 mr-4 ">
+      <div style="display:flex">
+        <p-autoComplete  [(ngModel)]="findArticleName" [suggestions]="filteredArticles" (completeMethod)="filterCountrySingle($event)"
+                         placeholder="id artykułu" [minLength]="1" name="article-search"
+                         emptyMessage = "Brak wyników"
+                         field="name"
+                         (onSelect) = "selected($event)"
+                         [inputStyle]="{'width':'200px', 'margin-right':'5px',
+                                     'margin-top': '0.3px','height': '37px'}"
+        >
+          <ng-template let-value  pTemplate="item">
+            <div class="ui-helper-clearfix">
+              <div >{{value.name}} , ID:{{value.id}}</div>
+            </div>
+          </ng-template>
+        </p-autoComplete>
+        <button class="btn btn-success  my-sm-0" type="submit" (click)="findArticleLocalization(articleToSearch)" (click)="openModal(template)">Szukaj</button>
+      </div>
+    </form>
+
+    <ul class="navbar-nav ">
+      <li class="dropdown">
+        <a class="nav-link dropdown-toggle menu-item" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Rafał Paprocki
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#"></a>
-          <a class="dropdown-item" href="#">Dane osobiste</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Zmień hasło</a>
+
+          <a class="dropdown-item" routerLink="user/profile">Mój profil</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Wyloguj</a>
         </div>
       </li>
- 
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <div style="display:flex">
-      <p-autoComplete  [(ngModel)]="findArticleName" [suggestions]="filteredArticles" (completeMethod)="filterCountrySingle($event)"
-                      placeholder="id artykułu" [minLength]="1" name="article-search"
-                       emptyMessage = "Brak wyników"
-                       field="name"
-                       (onSelect) = "selected($event)"
-                      [inputStyle]="{'width':'200px', 'margin-right':'5px',
-                                     'margin-top': '0.3px','height': '37px'}"
-      >
-        <ng-template let-value  pTemplate="item">
-          <div class="ui-helper-clearfix">
-            <div >{{value.name}} , ID:{{value.id}}</div>
-          </div>
-        </ng-template>
-      </p-autoComplete>
-      <button class="btn btn-success  my-sm-0" type="submit" (click)="findArticleLocalization(articleToSearch)" (click)="openModal(template)">Szukaj</button>
-      </div>
-    </form>
   </div>
 </nav>
 
 <div class="background" >
-<router-outlet></router-outlet>
-<div>
+  <router-outlet></router-outlet>
+  <div>
 
-  <ng-template #template >
-    <div class="modal-header">
-      <h4 class="modal-title pull-left" style="font-size: 16px">Przedmiot  {{  articleToSearch.name}}
-        o Id:  {{  articleToSearch.id}} znajduje się w skrytkach: </h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div *ngIf = "compartments?.length > 0">
-        <div *ngFor = "let compartment of compartments">
-          <div class="compartment-list-elem">
-            Lokalizacja: {{compartment.location}}
-            <br>
-            Numer skrytki: {{compartment.number}}
-            <br>
-            Ilość przedmiotów: {{compartment.articleQuantity}}
-            <br>
-            <button class="btn btn-success btn-proceed" (click)="refresh(compartment.id)" (click)="modalRef.hide()" >Przejdź do magazynu</button>
+    <ng-template #template >
+      <div class="modal-header">
+        <h4 class="modal-title pull-left" style="font-size: 16px">Przedmiot  {{  articleToSearch.name}}
+          o Id:  {{  articleToSearch.id}} znajduje się w skrytkach: </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf = "compartments?.length > 0">
+          <div *ngFor = "let compartment of compartments">
+            <div class="compartment-list-elem">
+              Lokalizacja: {{compartment.sector.sector}}
+              <br>
+              Numer skrytki: {{compartment.number}}
+              <br>
+              Ilość przedmiotów: {{compartment.articleQuantity}}
+              <br>
+              <button class="btn btn-success btn-proceed" (click)="refresh(compartment.number, compartment.sector.sector)" (click)="modalRef.hide()" >Przejdź do magazynu</button>
+            </div>
+
           </div>
-
         </div>
       </div>
-    </div>
-  </ng-template>
+    </ng-template>
+  </div>
+</div>

@@ -1,5 +1,4 @@
 
-
 .cube__face--right  { position:absolute;
   width:100px; height: 100px;
   transform: perspective(100px) rotateX(45deg) translateZ(10px) ;
@@ -74,4 +73,21 @@
   float:left
 }
 
+.card{
+  position: absolute;
+  left: 100px;
+  top: 150px;
+  visibility: hidden;
+}
 
+.asd{
+  background-color: green;
+}
+
+.asd:hover{
+  background-color: red;
+}
+
+.one-compartment:hover{
+  background-color: red;
+}

@@ -1,0 +1,39 @@
+<div class= "pt-2">
+  <div class="content" style="text-align: center">
+
+    <img style = "margin-top:20px;width:200px; height: 200px;" src="../../../assets/male-user-svgrepo-com.svg">
+    <br>
+    <div>Imię: Rafał</div>
+    <div>Nazwisko: Paprocki</div>
+    <hr>
+    <div>Rodzaj umowy: Umowa o dzieło</div>
+    <div>Stanowisko Pracownik magazynu</div>
+    <hr>
+    <button class="btn btn-success" style="width:100%" (click)="enablePasswordChangeForm()">Zmień hasło</button>
+
+    <div *ngIf="passwordChange" style="padding-left: 4px;padding-right:4px; margin-top:4px" >
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="form-group" >
+          <label class="password-change-label" for="exampleInputEmail1">Obecne hasło</label>
+          <input [(ngModel)]="oldPassword" type="password" class="form-control" name="oldpassword"
+                 id="eplexamInputEmail1" aria-describedby="emailHelp" placeholder="wprowadź obecne hasło"  #oldpassword ="ngModel"  required minlength="6">
+          <div *ngIf="f.submitted && oldpassword.invalid" style="text-align: left">
+            <div *ngIf="oldpassword.errors.required" class="invalid">Podaj obecne hasło</div>
+            <div *ngIf="oldpassword.errors.minlength" class="invalid">Hasło musi składać sie z conajmniej 6 znaków </div>
+          </div>
+        </div>
+        <div class="form-group" >
+          <label class="password-change-label" for="exampleInputEmail1">Nowe hasło</label>
+          <input [(ngModel)]="newPassword" type="password" class="form-control" name="newpassword" id="exampleInputEmail1"
+                 aria-describedby="emailHelp" placeholder="wprowadź nowe hasło" #newpassword ="ngModel" required minlength="6">
+          <div *ngIf="f.submitted && newpassword.invalid" style="text-align: left">
+            <div *ngIf="newpassword.errors.required" class="invalid">Podaj nowe hasło</div>
+            <div *ngIf="newpassword.errors.minlength" class="invalid">Hasło musi składać sie z conajmniej 6 znaków </div>
+          </div>
+
+        </div>
+        <button class="btn btn-info mt-3" style="width:100%">Zmień</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -14,6 +14,7 @@ export class DetailProductComponent implements OnInit {
   public articles;
   public modalRef: BsModalRef;
   public compartment;
+  public sector;
 
   constructor(private route: ActivatedRoute,
               private articleService: ArticleService,
@@ -23,17 +24,17 @@ export class DetailProductComponent implements OnInit {
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
+    this.sector = this.route.snapshot.paramMap.get('sector');
     this.articleService.id = id;
-    this.articleService.getArticleInCompartment(this.articleService.id.toString()).subscribe(data => {
+    debugger
+    this.articleService.getArticleInCompartment(this.sector, this.articleService.id.toString()).subscribe(data => {
       this.articles = data;
     });
 
-    this.compartmentService.getCompartmentById(this.articleService.id.toString()).subscribe(data => {
+    this.compartmentService.getCompartmentBySectorAndNumber(this.articleService.id.toString(), this.sector).subscribe(data => {
       this.compartment = data;
       console.log(this.compartment)
     })
-
-
   }
 
   openModal(template: TemplateRef<any>) {
@@ -44,10 +45,9 @@ export class DetailProductComponent implements OnInit {
   }
 
   updateArticleQuantity(quantity){
-    this.compartmentService.addDefinedArticleQuantity(
-      quantity, this.compartment.id.toString()).subscribe( data =>{
-      this.router.navigateByUrl('/warehauseComponent', {skipLocationChange: true}).then(()=>
-        this.router.navigate(['/', 'detail' , this.articleService.id]));
+    this.compartmentService.updateDefinedArticleQuantity(
+      quantity, this.articleService.id.toString(), this.sector).subscribe( data =>{
+        this.compartment.articleQuantity = data.articleQuantity;
       }
     );
   }

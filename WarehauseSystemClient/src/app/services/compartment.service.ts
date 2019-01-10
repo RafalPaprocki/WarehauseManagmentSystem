@@ -10,12 +10,12 @@ export class CompartmentService {
   constructor(private http: HttpClient) {
   }
 
-  getCompartmentById(id:string): Observable<any> {
-    return this.http.get('//localhost:8888/compartment/' + id );
+  getCompartmentBySectorAndNumber(id:string, sector:string): Observable<any> {
+    return this.http.get('//localhost:8888/compartment/' + id + "/" + sector );
   }
 
-  addDefinedArticleQuantity( quantity:string, id:string): Observable<any>{
-    return this.http.put('//localhost:8888/compartment/add/article/' + quantity + '/' + id, {});
+  updateDefinedArticleQuantity( quantity:string, id:string, sector:string): Observable<any>{
+    return this.http.get('//localhost:8888/compartment/add/article/' + quantity + '/' + id + '/' + sector);
   }
 
   addArticleToCompartment(articleId:string): Observable<any>{

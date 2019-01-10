@@ -25,12 +25,11 @@ public class Compartment {
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "article_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Article article;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "sector_id", nullable = false)
-    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "sector_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Sector sector;
 
     public Long getId() {

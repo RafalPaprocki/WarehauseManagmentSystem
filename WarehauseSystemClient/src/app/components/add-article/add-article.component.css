@@ -15,5 +15,10 @@
   width:22%;
   border-radius: 5px;
   box-shadow: 6px -4px 33px -2px rgba(242,228,242,1),
-   -6px 4px 33px -2px rgba(242,228,242,1);
+  -6px 4px 33px -2px rgba(242,228,242,1);
+}
+
+.invalid{
+  color:rgb(223, 88, 88);
+  font-size:12px;
 }
