@@ -20,6 +20,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {ToastModule} from 'primeng/toast';
 import {ToastrService} from "./services/toastr.service";
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {ToastrService} from "./services/toastr.service";
     WarehauseComponent,
     DetailProductComponent,
     AddArticleComponent,
-    ArticlesListComponent
+    ArticlesListComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import {ConfirmationService, Message} from "primeng/api";
 import {AutoCompleteModule} from "primeng/primeng";
 import {BsModalRef} from "ngx-bootstrap/modal/bs-modal-ref.service";
 import {BsModalService} from "ngx-bootstrap/modal";
+import {CompartmentService} from "../../services/compartment.service";
 
 @Component({
   selector: 'app-articles-list',
@@ -17,8 +18,10 @@ export class ArticlesListComponent implements OnInit {
   articleModel:ArticleModel;
   articleEdit:ArticleModel;
   msgs: Message[] = [];
+  retStr;
   public modalRef: BsModalRef;
-  constructor(public articleService : ArticleService, private modalService: BsModalService) { }
+  constructor(public articleService : ArticleService, private compartmentService: CompartmentService,
+              private modalService: BsModalService) { }
 
   ngOnInit() {
     this.articleModel = new ArticleModel();
@@ -69,6 +72,12 @@ export class ArticlesListComponent implements OnInit {
       this.articleEdit = data;
       window.scrollTo(0,0);
       location.reload();
+    })
+  }
+
+  addArticleToCompartment(id){
+    this.compartmentService.addArticleToCompartment(id.toString()).subscribe(data => {
+      this.retStr = data;
     })
   }
 }

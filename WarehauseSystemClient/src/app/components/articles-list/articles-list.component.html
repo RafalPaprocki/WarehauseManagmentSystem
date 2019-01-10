@@ -36,7 +36,7 @@
             <div style="margin-left:10px;">Dodatkowe informacje: {{article.descryption}}</div>
           </div>
           <div style="display: flex; justify-content: flex-end ;align-items:flex-end;margin-top:12px">
-            <button class = "btn btn-success button-option" (click)="openModal(template)">Dodaj</button>
+            <button class = "btn btn-success button-option" (click)= "addArticleToCompartment(article.id)" (click)="openModal(template)">Dodaj</button>
             <button class = "btn btn-warning button-option" (click)="aa(article)" (click)="openModal(template2)">Edytuj</button>
             <button class = "btn btn-danger button-option" (click)="aa(article)" (click)="openModal(template3)">Usuń</button>
           </div>

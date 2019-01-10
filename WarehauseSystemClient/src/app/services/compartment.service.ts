@@ -17,4 +17,8 @@ export class CompartmentService {
   addDefinedArticleQuantity( quantity:string, id:string): Observable<any>{
     return this.http.put('//localhost:8888/compartment/add/article/' + quantity + '/' + id, {});
   }
+
+  addArticleToCompartment(articleId:string): Observable<any>{
+    return this.http.get('//localhost:8888//add/article/' + articleId);
+  }
 }

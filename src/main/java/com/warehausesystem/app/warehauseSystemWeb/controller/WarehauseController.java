@@ -30,6 +30,8 @@ public class WarehauseController {
         this.repository = repository;
     }
 
+
+
     @GetMapping("/listauser/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
     public Collection<User> lista(@PathVariable(value="id")String id){

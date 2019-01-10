@@ -3,6 +3,7 @@ package com.warehausesystem.app.warehauseSystemWeb.controller;
 import com.warehausesystem.app.warehauseSystemWeb.Exceptions.ResourceNotFoundException;
 import com.warehausesystem.app.warehauseSystemWeb.model.Article;
 import com.warehausesystem.app.warehauseSystemWeb.model.Compartment;
+import com.warehausesystem.app.warehauseSystemWeb.model.Sector;
 import com.warehausesystem.app.warehauseSystemWeb.repository.ArticleRepository;
 import com.warehausesystem.app.warehauseSystemWeb.repository.CompartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,36 @@ public class CompartmentController {
     public Optional<Compartment> getCompartmentById(@PathVariable Long id){
         return compartmentRepository.findById(id);
     }
+
+    @GetMapping("/add/article/{articleId}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public void addArticleToCompartment(@PathVariable(value="articleId")String id){
+        List<Compartment> compartments = compartmentRepository.findByArticleId(Long.parseLong(id));
+        System.out.println("asdasd");
+        List<Compartment> dd = compartmentRepository.findBySectorId(Long.parseLong("1"));
+        if(compartments.size() == 0){
+
+        }
+        for(Compartment i : compartments){
+
+        }
+
+        Sector sd = new Sector();
+        sd.setId(Long.parseLong("2"));
+        sd.setSector("SectorA");
+
+            Compartment c = new Compartment();
+            c.setArticleQuantity(Long.parseLong("0"));
+            c.setArticle(null);
+            c.setSector(sd);
+            c.setNumber(new Long(1));
+
+            compartmentRepository.save(c);
+
+
+        System.out.println("asdased");
+    }
+
     @GetMapping("/compartments/get/article/{compartmentId}")
     public Article getArticleInCompartment(@PathVariable(value = "compartmentId") Long compartmentId){
         if(!compartmentRepository.findById(compartmentId).isPresent())

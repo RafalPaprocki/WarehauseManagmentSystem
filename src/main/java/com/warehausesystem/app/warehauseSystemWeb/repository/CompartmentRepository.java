@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface CompartmentRepository extends JpaRepository<Compartment,Long> {
     List<Compartment> findByArticleId(Long articleId);
+    List<Compartment> findBySectorId(Long sectorId);
 }

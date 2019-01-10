@@ -59,3 +59,19 @@
 .background{
   background-image: url("../../../assets/footer_lodyas.png");
 }
+
+.cls{
+  width: 9.7%;
+}
+
+.one-compartment{
+  cursor: pointer;
+  min-height: 7vh;
+  width: 12.2%;
+  margin-left:0.25%;
+  margin-bottom:4px;
+  background-color:green;
+  float:left
+}
+
+

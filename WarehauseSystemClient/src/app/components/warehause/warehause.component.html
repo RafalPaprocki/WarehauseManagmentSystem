@@ -1,14 +1,38 @@
-<div class="background">
-<div style = "text-align: center;" class = "mb-2"><b>Mapa magazynu sektor A</b></div>
-<div class = "container pt-2" style = "text-align:center; background-color:transparent; min-height:90vh; height:100%">
 
-  <div *ngFor = "let k of Arr(sectorHeight); let j = index;">
-    <div style="text-align: center" *ngFor = "let k of Arr(sectorWidth).fill(1); let i = index">
-      <div routerLink="/detail/{{1 + j*sectorWidth + i}}" style = "cursor: pointer;width: 9.7%; height: 40px; margin-left:0.25%; margin-bottom:4px;background-color:green; float:left">{{1 + j*sectorWidth + i}}</div>
+<!-- 10x15 -->
+
+<div *ngIf="sectorWidth === 10 && sectorHeight === 15 ">
+  <div class="background">
+  <div style = "text-align: center;" class = "mb-2"><b>Mapa magazynu sektor {{sectorName}}</b></div>
+  <div class = "container pt-2" style = "text-align:center; background-color:transparent; min-height:90vh; height:100%">
+
+    <div *ngFor = "let k of Arr(sectorHeight); let j = index;">
+      <div style="text-align: center" *ngFor = "let k of Arr(sectorWidth).fill(1); let i = index">
+        <div class = "cls" routerLink="/detail/{{1 + j*sectorWidth + i}}"
+             style = "cursor: pointer; height: 40px; margin-left:0.25%; margin-bottom:4px;background-color:green; float:left">{{1 + j*sectorWidth + i}}</div>
+      </div>
+    </div>
+
+    <button style = "margin-left:10px" class="btn btn-warning" (click)="name()">Bootstrap Button</button>
+  </div>
+  </div>
+</div>
+
+<!-- 10x10 -->
+
+<div *ngIf="sectorWidth === 8 && sectorHeight === 10 ">
+  <div class="background">
+    <div style = "text-align: center;" class = "mb-2"><b>Mapa magazynu sektor {{sectorName}}</b></div>
+
+    <div class = "container pt-2" style = "text-align:center; background-color:transparent; min-height:50vh; height:100%">
+
+      <div *ngFor = "let k of Arr(sectorHeight); let j = index;">
+        <div style="text-align: center" *ngFor = "let k of Arr(sectorWidth).fill(1); let i = index">
+          <div  routerLink="/detail/{{1 + j*sectorWidth + i}}"
+               class="one-compartment">{{1 + j*sectorWidth + i}}</div>
+        </div>
+      </div>
+
     </div>
   </div>
-
-  <button style = "margin-left:10px" class="btn btn-warning">Bootstrap Button</button>
-  <div>
-
-  </div>
+</div>
