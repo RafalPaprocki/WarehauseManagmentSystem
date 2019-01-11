@@ -29,7 +29,8 @@ overflow: auto;">
         <div style="text-align: center" *ngFor = "let k of Arr(sectorWidth).fill(1); let i = index">
           <div  routerLink="/detail/{{1 + j*sectorWidth + i}}/{{sectorName}}"
                 class="one-compartment" (mouseenter)="displayContentInCart($event,1 + j*sectorWidth + i, sectorName)"
-                (mouseleave)="unvisibleCart()" >{{1 + j*sectorWidth + i}}</div>
+                (mouseleave)="unvisibleCart()" >{{1 + j*sectorWidth + i}}
+          </div>
         </div>
       </div>
     </div>
@@ -38,8 +39,19 @@ overflow: auto;">
 
 <!-- card -->
 
-<div id="cart" class = "card" style="background-color: rgb(227, 240, 227); width:150px;height:250px; ">
+<div  id="cart" class = "card" style="background-color: rgb(227, 240, 227); width:150px;height:250px; ">
   Sektor {{hoveredElemSector}}
   <br>
   Numer skrytki: {{hoveredElemNumber}}
+  <hr>
+  <div *ngIf="compartment?.articleQuantity != 0">
+    <div>Artykuł id: {{article?.id}}</div>
+    <div>{{article?.name}}</div>
+    <div>{{article?.kind}}</div>
+    <hr>
+    <div>Ilość:{{compartment?.articleQuantity}}</div>
+  </div>
+  <div *ngIf="compartment?.articleQuantity == 0">
+    <div style="color:indianred">Brak elementów w tym magazynie</div>
+  </div>
 </div>

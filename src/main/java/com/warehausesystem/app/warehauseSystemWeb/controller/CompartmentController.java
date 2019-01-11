@@ -17,6 +17,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.Math.abs;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class CompartmentController {
@@ -42,11 +44,90 @@ public class CompartmentController {
         return comp;
     }
 
-    @GetMapping("/add/article/{articleId}")
+    @GetMapping("/add/arti/{articleId}/{quantity}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public void addArticleToCompartment(@PathVariable(value="articleId")String id){
+    public List<Compartment> addArticleToCompartmentt(@PathVariable(value="articleId")String id,
+                                               @PathVariable(value="quantity")Long quantity) {
+       Compartment compartments = compartmentRepository.findByArticleId(Long.parseLong(id)).get(0);
+       Long s = 1000 - quantity;
+        List<Compartment> cm = compartmentRepository.findBySectorIdAndArticleIdAnd(compartments.getSector(), compartments.getArticle(),
+                s);
+        return cm;
+    }
+
+
+    @GetMapping("/add/article/{articleId}/{quantity}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Compartment addArticleToCompartment(@PathVariable(value="articleId")String id,
+                                               @PathVariable(value="quantity")Long quantity){
+        Article addingArticle = articleRepository.findArticleById(Long.parseLong(id));
         List<Compartment> compartments = compartmentRepository.findByArticleId(Long.parseLong(id));
-        System.out.println("asdasd");
+        Compartment choosenCompartment = new Compartment();
+        //jesli nei ma artykulu w zadnej skrytce
+        if(compartments.size() == 0){
+            List<Compartment> emptyComp = compartmentRepository.findByArticleQuantity(Long.parseLong("0"));
+            if(emptyComp.size() != 0){
+                choosenCompartment = emptyComp.get(0);
+                choosenCompartment.setArticle(addingArticle);
+                choosenCompartment.setArticleQuantity(quantity);
+                compartmentRepository.save(choosenCompartment);
+                return choosenCompartment;
+            }
+        }
+        else{
+            //jesli sie zmiesci w któryms z istniejacych
+            for(Compartment comp : compartments){
+                Long artQuantity = comp.getArticleQuantity();
+                if(artQuantity + quantity < 1000){
+                    comp.setArticleQuantity(artQuantity + quantity);
+                    compartmentRepository.save(comp);
+                    return comp;
+                }
+            }
+            Long minNumber = Long.parseLong("200");
+            Sector sector = null;
+            Long minDifference = Long.parseLong("200");
+            for(Compartment comp:compartments){
+                Long s = 1000 - quantity;
+                List<Compartment> cm = compartmentRepository.findBySectorIdAndArticleIdAnd(comp.getSector(), comp.getArticle(),
+                        s);
+                Long currentCompNumber = comp.getNumber();
+                for(Compartment comp1 : cm){
+                    if((abs(comp1.getNumber() - currentCompNumber)) < minDifference){
+                        minDifference = abs(comp1.getNumber() - currentCompNumber);
+                        minNumber = comp1.getNumber();
+                        sector = comp1.getSector();
+                    }
+                }
+            }
+
+            choosenCompartment = compartmentRepository.findBySectorIdAndNumber(sector.getId(), minNumber).get(0);
+            choosenCompartment.setArticle(addingArticle);
+            choosenCompartment.setArticleQuantity(choosenCompartment.getArticleQuantity() + quantity);
+            return compartmentRepository.save(choosenCompartment);
+
+            //jesli sie nie zmiesci w skrytkach w ktorych juz jest
+
+/*
+            for(Compartment comp : compartments){
+                Compartment nextComp = new Compartment();
+                if(comp.getNumber() > (comp.getSector().getHeigh() * comp.getSector().getWidth())) {
+                    nextComp = compartmentRepository.findBySectorIdAndNumber(comp.getSector().getId(),
+                            comp.getNumber() + 1).get(0);
+                }
+                Long artQuantity = nextComp.getArticleQuantity();
+                if((nextComp.getArticle().getId() == null || nextComp.getArticle().getId() == comp.getArticle().getId()) && artQuantity + quantity < 1000){
+                    if(nextComp.getArticle().getId() == null){
+                        nextComp.setArticle(addingArticle);
+                    }
+                    nextComp.setArticleQuantity(artQuantity + quantity);
+                    compartmentRepository.save(nextComp);
+                    return nextComp;
+                }
+            }
+*/
+        }
+        System.out.println(choosenCompartment.getId());
         List<Compartment> dd = compartmentRepository.findBySectorId(Long.parseLong("1"));
         if(compartments.size() == 0){
 
@@ -55,6 +136,7 @@ public class CompartmentController {
 
         }
         System.out.println("asdased");
+        return choosenCompartment;
     }
 
     @GetMapping("/compartments/get/article/{sector}/{number}")

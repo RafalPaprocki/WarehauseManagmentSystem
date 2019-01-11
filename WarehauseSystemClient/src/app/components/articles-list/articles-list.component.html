@@ -36,7 +36,7 @@
             <div style="margin-left:10px;">Dodatkowe informacje: {{article.descryption}}</div>
           </div>
           <div style="display: flex; justify-content: flex-end ;align-items:flex-end;margin-top:12px">
-            <button class = "btn btn-success button-option" (click)= "addArticleToCompartment(article.id)" (click)="openModal(template)">Dodaj</button>
+            <button class = "btn btn-success button-option" (click)="saveCurrentArticleId(article.id)"  (click)="openModal(template)">Dodaj</button>
             <button class = "btn btn-warning button-option" (click)="aa(article)" (click)="openModal(template2)">Edytuj</button>
             <button class = "btn btn-danger button-option" (click)="aa(article)" (click)="openModal(template3)">Usuń</button>
           </div>
@@ -56,7 +56,8 @@
   <div class="modal-body">
     <input [(ngModel)]="quantity" type="number" class="form-control"
            id="exampleFormControlWidth" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}">
-    <button class = "btn btn-primary mt-3" style="float:right; width:100%"  (click)="modalRef.hide()">
+    <button class = "btn btn-primary mt-3" style="float:right; width:100%" (click)= "addArticleToCompartment(articleId,quantity)"  (click)="modalRef.hide()"
+            (click)="openModal(template4)">
       Dodaj
     </button>
   </div>
@@ -114,6 +115,28 @@
         Nie
       </button>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #template4 >
+
+  <div class="modal-header">
+  <h4 class="modal-title pull-left" style="font-size: 16px">Przedmiot pomyślnie dodany </h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class="modal-body">
+        <div class="compartment-list-elem">
+          Lokalizacja: {{retStr?.sector?.sector}}
+          <br>
+          Numer skrytki: {{retStr?.number}}
+          <br>
+          Ilość przedmiotów: {{retStr?.articleQuantity}}
+          <br>
+          <button class="btn btn-success btn-proceed" (click)="toCompartment(retStr.number, retStr.sector.sector)"
+                  (click)="modalRef.hide()" >Przejdź do magazynu</button>
+        </div>
   </div>
 </ng-template>
 

@@ -26,4 +26,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByIdLike(@Param("id") String id);
 
     List<Article> findByNameEndingWithAndColorEndingWith(String name, String color);
+
+    @Query("select  a from Article a where a.id = :id")
+    Article findArticleById(@Param("id") Long id);
 }

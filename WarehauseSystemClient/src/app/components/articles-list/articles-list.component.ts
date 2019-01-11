@@ -6,6 +6,7 @@ import {AutoCompleteModule} from "primeng/primeng";
 import {BsModalRef} from "ngx-bootstrap/modal/bs-modal-ref.service";
 import {BsModalService} from "ngx-bootstrap/modal";
 import {CompartmentService} from "../../services/compartment.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-articles-list',
@@ -19,9 +20,11 @@ export class ArticlesListComponent implements OnInit {
   articleEdit:ArticleModel;
   msgs: Message[] = [];
   retStr;
+  articleId;
   public modalRef: BsModalRef;
+  public modal2Ref: BsModalRef;
   constructor(public articleService : ArticleService, private compartmentService: CompartmentService,
-              private modalService: BsModalService) { }
+              private modalService: BsModalService, private router: Router) { }
 
   ngOnInit() {
     this.articleModel = new ArticleModel();
@@ -43,6 +46,13 @@ export class ArticlesListComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(
+      template,
+      Object.assign({}, { class: 'modal-sm' })
+    );
+  }
+
+  openModal2(template: TemplateRef<any>) {
+    this.modal2Ref = this.modalService.show(
       template,
       Object.assign({}, { class: 'modal-sm' })
     );
@@ -75,9 +85,18 @@ export class ArticlesListComponent implements OnInit {
     })
   }
 
-  addArticleToCompartment(id){
-    this.compartmentService.addArticleToCompartment(id.toString()).subscribe(data => {
+  addArticleToCompartment(id, quantity){
+    this.compartmentService.addArticleToCompartment(id.toString(), quantity).subscribe(data => {
       this.retStr = data;
     })
+  }
+
+  saveCurrentArticleId(articleId){
+    this.articleId = articleId;
+  }
+
+  toCompartment(number, sector){
+    let sec = sector.toString().split(' ')[1];
+    this.router.navigate(['/', 'detail' , number.toString(), sec]);
   }
 }

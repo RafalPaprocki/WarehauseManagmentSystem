@@ -78,6 +78,8 @@
   left: 100px;
   top: 150px;
   visibility: hidden;
+  padding:4px;
+  text-align: center;
 }
 
 .asd{

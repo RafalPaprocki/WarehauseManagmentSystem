@@ -16,10 +16,10 @@ public class Sector {
     private String sector;
 
     @NotNull
-    private Integer width;
+    private Long width;
 
     @NotNull
-    private Integer heigh;
+    private Long heigh;
 
     public Long getId() {
         return id;
@@ -35,5 +35,21 @@ public class Sector {
 
     public void setSector(String sector) {
         this.sector = sector;
+    }
+
+    public Long getWidth() {
+        return width;
+    }
+
+    public void setWidth(Long width) {
+        this.width = width;
+    }
+
+    public Long getHeigh() {
+        return heigh;
+    }
+
+    public void setHeigh(Long heigh) {
+        this.heigh = heigh;
     }
 }
