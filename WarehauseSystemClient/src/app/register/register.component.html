@@ -1,0 +1,81 @@
+<div *ngIf="isSignedUp; else signupForm">
+  Rejestracja przebiegła pomyślnie. Proszę, zaloguj się.
+</div>
+
+<ng-template #signupForm>
+  <div class="container" style="background-color: ghostwhite;width:70%; padding-top:21px;display: block;
+       overflow: auto;">
+    <div  style="max-width:350px;margin-right:auto; margin-left:auto">
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="form-group">
+          <label for="name">Imie</label>
+          <input type="text" class="form-control" name="name" [(ngModel)]="form.name" #name="ngModel" required />
+          <div *ngIf="f.submitted && name.invalid">
+            <div *ngIf="name.errors.required" class="invalid">Proszę podać imie</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="surname">Nazwisko</label>
+          <input type="text" class="form-control" name="surname" [(ngModel)]="form.surname" #surname="ngModel" required />
+          <div *ngIf="f.submitted && surname.invalid">
+            <div *ngIf="surname.errors.required" class="invalid">Proszę podać imie</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="username">Login</label>
+          <input type="text" class="form-control" name="username" [(ngModel)]="form.username" #username="ngModel"
+                 required />
+          <div *ngIf="f.submitted && username.invalid">
+            <div *ngIf="username.errors.required" class="invalid">Proszę podać login</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Adres email</label>
+          <input type="text" class="form-control" name="email" [(ngModel)]="form.email" #email="ngModel" required email />
+          <div *ngIf="f.submitted && email.invalid">
+            <div *ngIf="email.errors.required" class="invalid">Proszę podać email</div>
+            <div *ngIf="email.errors.email" class="invalid">To nie jest poprawny adres email</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Hasło</label>
+          <input type="password" class="form-control" name="password" [(ngModel)]="form.password" #password="ngModel"
+                 required minlength="3" />
+          <div *ngIf="f.submitted && password.invalid">
+            <div *ngIf="password.errors.required" class="invalid">Proszę podać hasło</div>
+            <div *ngIf="password.errors.minlength" class="invalid">Hasło musi zawierać więcej niż 6 znaków</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="kind">Rodzaj umowy</label>
+          <select [(ngModel)] = "form.kind" class="form-control" name="kind" [ngModelOptions]="{standalone: true}" #kind="ngModel" required>
+            <option>umowa o prace</option>
+            <option>umowa o dzielo</option>
+            <option>umowa B2B</option>
+            <option>umowa zlecenie</option>
+          </select>
+          <div *ngIf="f.submitted && kind.invalid">
+            <div *ngIf="kind.errors.required" class="invalid">Proszę podać rodzaj umowy</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="position">Stanowisko</label>
+          <select [(ngModel)] = "form.position" class="form-control" name="position" [ngModelOptions]="{standalone: true}" #position="ngModel" required>
+            <option>pracownik magazynu</option>
+            <option>pracownik recepcji</option>
+            <option>administrator</option>
+          </select>
+          <div *ngIf="f.submitted && position.invalid">
+            <div *ngIf="position.errors.required" class="invalid">Proszę podać stanowisko.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" style="width:100%">Zarejestruj użytkownika</button>
+          <div *ngIf="f.submitted && isSignUpFailed" class="alert alert-warning" class="invalid">
+            Nie udało się zarejestrować!<br/>{{errorMessage}}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

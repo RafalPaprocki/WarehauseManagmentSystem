@@ -1,7 +1,14 @@
 package com.warehausesystem.app.warehauseSystemWeb.repository;
 
-import com.warehausesystem.app.warehauseSystemWeb.model.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
-public interface RoleRepository extends JpaRepository<Role, Long>{
+
+import com.warehausesystem.app.warehauseSystemWeb.model.Role;
+import com.warehausesystem.app.warehauseSystemWeb.model.RoleName;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Optional<Role> findByName(RoleName roleName);
 }

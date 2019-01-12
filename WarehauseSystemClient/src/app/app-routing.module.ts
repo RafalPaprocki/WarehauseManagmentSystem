@@ -7,6 +7,8 @@ import {AddArticleComponent} from './components/add-article/add-article.componen
 import {ArticlesListComponent} from "./components/articles-list/articles-list.component";
 import {HomeComponent} from "./components/home/home.component";
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import {RegisterComponent} from "./register/register.component";
+import {LoginComponent} from "./login/login.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'homeComponent', pathMatch: 'full' },
@@ -16,7 +18,10 @@ const routes: Routes = [
   { path: 'detail/:id/:sector', component: DetailProductComponent },
   { path: 'article/add', component: AddArticleComponent},
   { path: 'article/list', component: ArticlesListComponent},
-  { path: 'user/profile', component: UserProfileComponent }
+  { path: 'user/profile', component: UserProfileComponent },
+  { path: 'signup', component: RegisterComponent },
+  { path: 'auth/login', component: LoginComponent },
+
 ];
 
 @NgModule({

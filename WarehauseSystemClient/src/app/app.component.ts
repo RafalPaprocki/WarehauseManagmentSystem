@@ -5,6 +5,8 @@ import {ArticleService} from "./services/article.service";
 import {BsModalRef} from "ngx-bootstrap/modal/bs-modal-ref.service";
 import {BsModalService} from "ngx-bootstrap";
 import {Router} from '@angular/router';
+import {TokenStorageService} from "./auth/token-storage.service";
+import {UserService} from "./services/user.service";
 
 @Component({
   selector: 'app-root',
@@ -17,9 +19,43 @@ export class AppComponent {
   articleToSearch;
   compartments;
   findArticleName;
+  private roles: string[];
+  private authority: string;
+  private isLoggedIn = false;
+  private username;
   public modalRef: BsModalRef;
+  userInfo;
   constructor(private articleService : ArticleService, private modalService:BsModalService,
-              private router: Router) {
+              private router: Router, private token: TokenStorageService,
+              private tokenStorage: TokenStorageService, private userService: UserService) {
+  }
+
+  ngOnInit() {
+    if (this.tokenStorage.getToken()) {
+      this.username = this.token.getUsername();
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getAuthorities();
+      this.roles.every(role => {
+        if (role === 'ROLE_ADMIN') {
+          this.authority = 'admin';
+          return false;
+        } else if (role === 'ROLE_PM') {
+          this.authority = 'pm';
+          return false;
+        }
+        this.authority = 'user';
+        return true;
+      });
+      this.userService.getUserInfo(this.username).subscribe(data =>{
+        this.userInfo = data;
+      });
+    }
+    if(this.isLoggedIn == false){
+      this.router.navigate(["/auth/login"]);
+    }
+    if(this.isLoggedIn == true){
+      this.router.navigate(["/"]);
+    }
   }
 
   filterCountrySingle(event) {
@@ -27,7 +63,6 @@ export class AppComponent {
       this.filteredArticles = data;
       console.log(this.filteredArticles)
     });
-
   }
 
   selected(event){
@@ -57,6 +92,10 @@ export class AppComponent {
       this.router.navigate(['/', 'detail' , number.toString(), sec]));
   }
 
+  logout() {
+    this.token.signOut();
+    window.location.reload();
+  }
 
 }
 

@@ -22,6 +22,8 @@ import {ToastModule} from 'primeng/toast';
 import {ToastrService} from "./services/toastr.service";
 import { HomeComponent } from './components/home/home.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     AddArticleComponent,
     ArticlesListComponent,
     HomeComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

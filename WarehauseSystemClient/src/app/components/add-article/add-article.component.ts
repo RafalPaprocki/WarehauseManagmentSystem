@@ -26,25 +26,24 @@ export class AddArticleComponent implements OnInit {
       100);
   }
 
-  public addArticle(){
+  public addArticle(kindinv, artnameinv){
     console.log(this.article);
-    this.articleService.sendPost(this.article).subscribe(data => {
-      this.postData = data;
-    });
-    let a = this;
-    a.added = true;
+    if(!kindinv && !artnameinv) {
+      this.articleService.sendPost(this.article).subscribe(data => {
+        this.postData = data;
+      });
+      let a = this;
+      a.added = true;
 
-    setTimeout(function()
-      {
-        a.added = false;
-      },
-      1000);
-    setTimeout(function()
-      {
-        location.reload();
-      },
-      1100);
-
+      setTimeout(function () {
+          a.added = false;
+        },
+        1000);
+      setTimeout(function () {
+          location.reload();
+        },
+        1100);
+    }
   }
 
 

@@ -3,11 +3,12 @@
 
     <img style = "margin-top:20px;width:200px; height: 200px;" src="../../../assets/male-user-svgrepo-com.svg">
     <br>
-    <div>Imię: Rafał</div>
-    <div>Nazwisko: Paprocki</div>
+    <div>Imię: {{userInfo?.name}}</div>
+    <div>Nazwisko: {{userInfo?.surname}}</div>
+    <div>Email: {{userInfo?.email}}</div>
     <hr>
-    <div>Rodzaj umowy: Umowa o dzieło</div>
-    <div>Stanowisko Pracownik magazynu</div>
+    <div>Rodzaj umowy: {{userInfo?.agreement}}</div>
+    <div>Stanowisko: {{userInfo?.position}}</div>
     <hr>
     <button class="btn btn-success" style="width:100%" (click)="enablePasswordChangeForm()">Zmień hasło</button>
 

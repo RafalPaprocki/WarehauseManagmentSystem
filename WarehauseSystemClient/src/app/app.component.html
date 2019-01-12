@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav *ngIf="isLoggedIn" class="navbar navbar-expand-lg navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -18,6 +18,10 @@
       </li>
       <li class="nav-item">
         <a class="nav-link"> <a class="menu-item" routerLink="article/add" routerLinkActive="active-link">Nowy artykuł</a>
+        </a>
+      </li>
+      <li *ngIf="authority === 'admin' " class="nav-item">
+        <a class="nav-link"> <a class="menu-item" routerLink="signup" routerLinkActive="active-link">Nowy pracownik</a>
         </a>
       </li>
 
@@ -46,20 +50,20 @@
     <ul class="navbar-nav ">
       <li class="dropdown">
         <a class="nav-link dropdown-toggle menu-item" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Rafał Paprocki
+          {{userInfo.name}} {{userInfo.surname}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
           <a class="dropdown-item" routerLink="user/profile">Mój profil</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Wyloguj</a>
+          <a class="dropdown-item" routerLink="auth/login" (click)="logout()">Wyloguj</a>
         </div>
       </li>
     </ul>
   </div>
 </nav>
 
-<div class="background" >
+<div [ngClass]="{'background': isLoggedIn}"  >
   <router-outlet></router-outlet>
   <div>
 
@@ -90,3 +94,5 @@
     </ng-template>
   </div>
 </div>
+
+

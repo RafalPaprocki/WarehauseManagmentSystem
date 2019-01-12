@@ -19,6 +19,6 @@ export class CompartmentService {
   }
 
   addArticleToCompartment(articleId:string, quantity:string): Observable<any>{
-    return this.http.get('//localhost:8888//add/article/' + articleId + '/' + quantity);
+    return this.http.get('//localhost:8888/add/article/' + articleId + '/' + quantity);
   }
 }
