@@ -36,6 +36,7 @@ public class UserController {
         return userRepository.findById(user.getId()).map(employee -> {
             employee.setUsername(user.getUsername());
             employee.setName(user.getName());
+            employee.setSurname(user.getSurname());
             employee.setEmail(user.getEmail());
             employee.setAgreement(user.getAgreement());
             employee.setPosition(user.getPosition());
