@@ -1,0 +1,81 @@
+<div class = "row" style = "margin-right:0px; margin-left:0px;">
+  <div class = "col-3" style=" text-align: center;background-color:#b9b9b9;  height: 110vh;">
+    <div style = "margin-left:15%">
+      <label class = "filter_label" for="articleId">Id pracownika</label>
+      <input  [(ngModel)]="employeeFilters.id" type="text" class = "form-control" style="width:90%"
+              id="articleId" placeholder="np.5" [ngModelOptions]="{standalone: true}"
+              (ngModelChange)="filtrArticlesList()">
+      <label for="articleName">Imię</label>
+      <input  [(ngModel)]="employeeFilters.name" type="text" class = "form-control" style="width:90%"
+              id="articleName" placeholder="np. Jan" [ngModelOptions]="{standalone: true}"
+              (ngModelChange)="filtrArticlesList()">
+      <label for="articleKind">Nazwisko</label>
+      <input  [(ngModel)]="employeeFilters.surname" type="text" class = "form-control" style="width:90%"
+              id="articleKind" placeholder="np. Kowalski" [ngModelOptions]="{standalone: true}"
+              (ngModelChange)="filtrArticlesList()">
+    </div>
+  </div>
+  <div class = "col-9" style="margin:0px;padding-right:0px">
+    <div style = "width:100%; min-height: 110vh">
+      <ul style="background-color: black; " >
+        <li *ngFor="let employee of allEmployees" style = "width:100%; min-height: 2px; margin-bottom:2px; ">
+          <div style = "background-color: green;position: absolute">ID = {{employee.id}}</div>
+          <div style="display:flex; flex-wrap: wrap; justify-content: center;  font-size: 20px">
+            <div>{{employee.name}} {{employee.surname}}</div>
+          </div>
+          <div style="width:100%;display:flex; font-size: 13px; justify-content: center">
+            <div style="margin-left:10px;">Email: {{employee.email}}</div>
+            <div style="margin-left:10px; ">Umowa: {{employee.agreement}}</div>
+            <div style="margin-left:10px; ">Pozycja: {{employee.position}}</div>
+          </div>
+          <div style="display: flex; justify-content: flex-end ;align-items:flex-end;margin-top:-16px">
+            <button style="font-size: 15px" class = "btn btn-warning button-option" (click)="edit(employee.username)" (click)="openModal(template2)">Edytuj</button>
+          </div>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #template2 >
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" style="font-size: 20px">Id pracownika: {{employeeEdit.id}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" >
+    <label for="article-edit-name">Imię</label>
+    <input [(ngModel)]="employeeEdit.name" type="text" class="form-control"
+           id="article-edit-name"  [ngModelOptions]="{standalone: true}">
+    <label for="article-edit-kind">Nazwisko</label>
+    <input [(ngModel)]="employeeEdit.surname" type="text" class="form-control"
+           id="article-edit-kind"  [ngModelOptions]="{standalone: true}">
+    <label for="article-edit-color">Nazwa użytkownika</label>
+    <input [(ngModel)]="employeeEdit.username" type="text" class="form-control"
+           id="article-edit-color" [ngModelOptions]="{standalone: true}">
+    <label for="article-edit-width">Email</label>
+    <input [(ngModel)]="employeeEdit.email" type="text" class="form-control"
+           id="article-edit-width" [ngModelOptions]="{standalone: true}">
+    <label for="kind">Rodzaj umowy</label>
+    <select [(ngModel)] = "employeeEdit.agreement" class="form-control" name="kind" [ngModelOptions]="{standalone: true}" #kind="ngModel" required>
+      <option>umowa o prace</option>
+      <option>umowa o dzielo</option>
+      <option>umowa B2B</option>
+      <option>umowa zlecenie</option>
+    </select>
+    <label for="position">Stanowisko</label>
+    <select [(ngModel)] = "employeeEdit.position" class="form-control" name="position" [ngModelOptions]="{standalone: true}" #position="ngModel" required>
+      <option>pracownik magazynu</option>
+      <option>pracownik recepcji</option>
+      <option>administrator</option>
+    </select>
+  </div>
+
+  <div class="modal-footer">
+    <button class = "btn btn-success" style="float:right; width:100%" (click)="updateEmployee()" (click)="modalRef.hide()">
+      Edytuj
+    </button>
+  </div>
+</ng-template>
+

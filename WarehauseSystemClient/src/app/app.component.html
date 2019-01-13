@@ -1,4 +1,4 @@
-<nav *ngIf="isLoggedIn" class="navbar navbar-expand-lg navbar-light bg-light">
+<nav *ngIf="isLoggedIn" class="navbar navbar-expand-lg navbar-light " style="background-color:  #0101ff9c ">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -20,12 +20,15 @@
         <a class="nav-link"> <a class="menu-item" routerLink="article/add" routerLinkActive="active-link">Nowy artykuł</a>
         </a>
       </li>
-      <li *ngIf="authority === 'admin' " class="nav-item">
-        <a class="nav-link"> <a class="menu-item" routerLink="signup" routerLinkActive="active-link">Nowy pracownik</a>
-        </a>
+      <li *ngIf="authority === 'admin' " class="nav-item dropdown" style="cursor: pointer; color:black">
+      <a class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Zarządzaj pracownikami
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <a class="dropdown-item" routerLink="signup">Nowy pracownik</a>
+        <a class="dropdown-item" routerLink="employees/edit">Edytuj dane pracownika</a>
+      </div>
       </li>
-
-
     </ul>
     <form class="form-inline my-2 my-lg-0 mr-4 ">
       <div style="display:flex">
@@ -45,6 +48,8 @@
         </p-autoComplete>
         <button class="btn btn-success  my-sm-0" type="submit" (click)="findArticleLocalization(articleToSearch)" (click)="openModal(template)">Szukaj</button>
       </div>
+
+
     </form>
 
     <ul class="navbar-nav ">

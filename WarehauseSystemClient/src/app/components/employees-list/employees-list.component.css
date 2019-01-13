@@ -1,0 +1,38 @@
+.input, label{
+  display:block;
+}
+
+ul{
+  margin:0px;
+  padding:0px;
+}
+
+li{
+  list-style-type: none;
+  background-color: white;
+  cursor:pointer;
+}
+
+.button-option{
+  padding: 0.175rem .65rem;
+  font-size: 0.5rem;
+}
+
+.compartment-list-elem{
+  min-height: 80px;
+  padding: 4px;
+  background-color: aliceblue;
+  width:100%;
+  margin-bottom:9px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px -1px rgba(0,0,0,0.75);
+}
+
+.btn-proceed{
+  float: right;
+  height: 25px;
+  font-size: 9px;
+  padding: 6px;
+  margin-top: -49px;
+  margin-right: 2px;
+}

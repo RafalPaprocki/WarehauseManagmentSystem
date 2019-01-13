@@ -16,25 +16,31 @@
       <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="form-group" >
           <label class="password-change-label" for="exampleInputEmail1">Obecne hasło</label>
-          <input [(ngModel)]="oldPassword" type="password" class="form-control" name="oldpassword"
+          <input [(ngModel)]="passwordForm.oldPassword" type="password" class="form-control" name="oldpassword"
                  id="eplexamInputEmail1" aria-describedby="emailHelp" placeholder="wprowadź obecne hasło"  #oldpassword ="ngModel"  required minlength="6">
           <div *ngIf="f.submitted && oldpassword.invalid" style="text-align: left">
             <div *ngIf="oldpassword.errors.required" class="invalid">Podaj obecne hasło</div>
             <div *ngIf="oldpassword.errors.minlength" class="invalid">Hasło musi składać sie z conajmniej 6 znaków </div>
           </div>
+          <div *ngIf="isLoginFailed" class="invalid" style="text-align: left">
+            Niepoprawne hasło
+          </div>
         </div>
         <div class="form-group" >
           <label class="password-change-label" for="exampleInputEmail1">Nowe hasło</label>
-          <input [(ngModel)]="newPassword" type="password" class="form-control" name="newpassword" id="exampleInputEmail1"
+          <input [(ngModel)]="passwordForm.newPassword" type="password" class="form-control" name="newpassword" id="exampleInputEmail1"
                  aria-describedby="emailHelp" placeholder="wprowadź nowe hasło" #newpassword ="ngModel" required minlength="6">
           <div *ngIf="f.submitted && newpassword.invalid" style="text-align: left">
             <div *ngIf="newpassword.errors.required" class="invalid">Podaj nowe hasło</div>
             <div *ngIf="newpassword.errors.minlength" class="invalid">Hasło musi składać sie z conajmniej 6 znaków </div>
           </div>
 
+
         </div>
-        <button class="btn btn-info mt-3" style="width:100%">Zmień</button>
+        <button class="btn btn-info mt-3 mb-3" style="width:100%">Zmień</button>
       </form>
     </div>
   </div>
 </div>
+
+<div *ngIf = "added" class = "succed-add">Pomyślnie zmieniono hasło</div>

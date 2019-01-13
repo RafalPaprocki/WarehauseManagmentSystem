@@ -8,11 +8,11 @@
               (ngModelChange)="filtrArticlesList()">
       <label for="articleName">Nazwa</label>
       <input  [(ngModel)]="articleModel.name" type="text" class = "form-control" style="width:90%"
-              id="articleName" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}"
+              id="articleName" placeholder="np. asus" [ngModelOptions]="{standalone: true}"
               (ngModelChange)="filtrArticlesList()">
       <label for="articleKind">Rodzaj</label>
       <input  [(ngModel)]="articleModel.kind" type="text" class = "form-control" style="width:90%"
-              id="articleKind" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}"
+              id="articleKind" placeholder="np. monitory" [ngModelOptions]="{standalone: true}"
               (ngModelChange)="filtrArticlesList()">
       <label for="articleColor">Kolor</label>
       <input  [(ngModel)]="articleModel.color" type="text" class = "form-control" style="width:90%"
@@ -23,22 +23,22 @@
   <div class = "col-9" style="margin:0px;padding-right:0px">
     <div style = "width:100%; min-height: 110vh">
       <ul style="background-color: black">
-        <li *ngFor="let article of allArticles" style = "width:100%; min-height: 70px; margin-bottom:2px; ">
+        <li *ngFor="let article of allArticles" style = " width:100%; min-height: 20px; margin-bottom:2px; ">
           <div style = "background-color: green;position: absolute">ID = {{article.id}}</div>
-          <div style="display:flex; flex-wrap: wrap">
+          <div style="display:flex; flex-wrap: wrap; font-size: 17px">
             <div style="margin-left:100px; width:15%">{{article.name}}</div>
             <div style="margin-left:100px; ">Rodzaj: {{article.kind}}</div>
           </div>
-          <div style="width:100%;display:flex; font-size: 10px; justify-content: center">
+          <div style="width:100%;display:flex; font-size: 12px; justify-content: center">
             <div style="margin-left:10px;">Kolor: {{article.color}}</div>
             <div style="margin-left:10px; ">Wysokokość: {{article.width}}</div>
             <div style="margin-left:10px; ">Szerokość: {{article.heigh}}</div>
             <div style="margin-left:10px;">Dodatkowe informacje: {{article.descryption}}</div>
           </div>
-          <div style="display: flex; justify-content: flex-end ;align-items:flex-end;margin-top:12px">
-            <button class = "btn btn-success button-option" (click)="saveCurrentArticleId(article.id)"  (click)="openModal(template)">Dodaj</button>
-            <button class = "btn btn-warning button-option" (click)="aa(article)" (click)="openModal(template2)">Edytuj</button>
-            <button class = "btn btn-danger button-option" (click)="aa(article)" (click)="openModal(template3)">Usuń</button>
+          <div style="display: flex; justify-content: flex-end ;align-items:flex-end;margin-top:2px">
+            <button class = "btn btn-success button-option" style="font-size: 11px" (click)="saveCurrentArticleId(article.id)"  (click)="openModal(template)">Dodaj</button>
+            <button class = "btn btn-warning button-option" style="font-size: 11px" (click)="aa(article)" (click)="openModal(template2)">Edytuj</button>
+            <button class = "btn btn-danger button-option" style="font-size: 11px" (click)="aa(article)" (click)="openModal(template3)">Usuń</button>
           </div>
       </ul>
     </div>

@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
+import com.warehausesystem.app.warehauseSystemWeb.Exceptions.ResourceNotFoundException;
+import com.warehausesystem.app.warehauseSystemWeb.message.request.ChangePasswordForm;
 import com.warehausesystem.app.warehauseSystemWeb.message.request.LoginForm;
 import com.warehausesystem.app.warehauseSystemWeb.message.request.SignUpForm;
 import com.warehausesystem.app.warehauseSystemWeb.message.response.JwtResponse;
@@ -23,11 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -61,6 +59,17 @@ public class AuthRestAPIs {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+    }
+
+    @PostMapping("/change/password")
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordForm changePassword){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(changePassword.getUsername(), changePassword.getOldPassword()));
+        userRepository.findByUsername(changePassword.getUsername()).map(employee -> {
+            employee.setPassword(encoder.encode(changePassword.getNewPassword()));
+            return userRepository.save(employee);
+        }).orElseThrow(() -> new ResourceNotFoundException("User o id " + " not found"));
+        return new ResponseEntity<>(new ResponseMessage("Rejestracja zakończona sukcesem"), HttpStatus.OK);
     }
 
     @PostMapping("/signup")

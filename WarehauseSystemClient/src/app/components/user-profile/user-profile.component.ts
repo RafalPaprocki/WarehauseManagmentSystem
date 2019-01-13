@@ -10,11 +10,19 @@ import {UserService} from "../../services/user.service";
 export class UserProfileComponent implements OnInit {
 
   passwordChange :boolean = false;
-  oldPassword : String;
-  newPassword : String;
+  oldPassword : string;
+  newPassword : string;
   roles:string[];
-  username: String;
+  username: string;
   userInfo;
+  passwordForm = {
+    username: "",
+    oldPassword: "",
+    newPassword: ""
+  };
+  errorMessage;
+  isLoginFailed = false;
+  added : boolean = false;
   constructor(private tokenStorage:TokenStorageService, private userService:UserService) { }
 
   ngOnInit() {
@@ -25,10 +33,33 @@ export class UserProfileComponent implements OnInit {
       this.userInfo = data;
       console.log(this.userInfo)
     });
-
   }
 
   enablePasswordChangeForm(){
     this.passwordChange = this.passwordChange ? false : true;
+  }
+
+  onSubmit(){
+    this.passwordForm.username = this.username;
+
+    this.userService.changePassword(this.passwordForm).subscribe(data => {
+        this.isLoginFailed = false;
+      let a = this;
+      a.added = true;
+
+      setTimeout(function () {
+          a.added = false;
+        },
+        1000);
+      setTimeout(function () {
+          location.reload();
+        },
+        1100);
+    },
+      error => {
+        this.errorMessage = error.error.message;
+        this.isLoginFailed = true;
+      })
+
   }
 }
