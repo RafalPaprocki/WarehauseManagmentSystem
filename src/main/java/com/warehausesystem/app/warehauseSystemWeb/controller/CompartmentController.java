@@ -174,7 +174,22 @@ public class CompartmentController {
         Sector sec = sectorRepository.findBySector("Sektor " + sector);
         Compartment comp = compartmentRepository.findBySectorIdAndNumber(sec.getId(), id).get(0);
         comp.setArticleQuantity(comp.getArticleQuantity() + quantity);
+        if(comp.getArticleQuantity() == 0){
+            comp.setArticle(null);
+        }
         return compartmentRepository.save(comp);
     }
 
+
+    @GetMapping("compartment/add/articleto/{quantity}/{articleId}/{compartmentId}")
+    public Compartment updateCompartmentWithArticle(@PathVariable Long quantity,
+                                                    @PathVariable Long articleId,
+                                                    @PathVariable Long compartmentId){
+        return compartmentRepository.findById(compartmentId).map(comp -> {
+            comp.setArticleQuantity(quantity);
+            comp.setArticle(articleRepository.findArticleById(articleId));
+            return compartmentRepository.save(comp);
+        }).orElseThrow(() -> new ResourceNotFoundException("Segment o id " + compartmentId + " not found"));
+
+    }
 }

@@ -35,10 +35,10 @@
             <div style="margin-left:10px; ">Szerokość: {{article.heigh}}</div>
             <div style="margin-left:10px;">Dodatkowe informacje: {{article.descryption}}</div>
           </div>
-          <div style="display: flex; justify-content: flex-end ;align-items:flex-end;margin-top:2px">
-            <button class = "btn btn-success button-option" style="font-size: 11px" (click)="saveCurrentArticleId(article.id)"  (click)="openModal(template)">Dodaj</button>
-            <button class = "btn btn-warning button-option" style="font-size: 11px" (click)="aa(article)" (click)="openModal(template2)">Edytuj</button>
-            <button class = "btn btn-danger button-option" style="font-size: 11px" (click)="aa(article)" (click)="openModal(template3)">Usuń</button>
+          <div  style="display: flex; justify-content: flex-end ;align-items:flex-end;margin-top:2px">
+            <button  class = "btn btn-success button-option" style="font-size: 11px" (click)="saveCurrentArticleId(article.id)"  (click)="openModal(template)">Dodaj</button>
+            <button *ngIf="knownCompartment === undefined" class = "btn btn-warning button-option" style="font-size: 11px" (click)="aa(article)" (click)="openModal(template2)">Edytuj</button>
+            <button *ngIf="knownCompartment === undefined" class = "btn btn-danger button-option" style="font-size: 11px" (click)="aa(article)" (click)="openModal(template3)">Usuń</button>
           </div>
       </ul>
     </div>
@@ -56,8 +56,12 @@
   <div class="modal-body">
     <input [(ngModel)]="quantity" type="number" class="form-control"
            id="exampleFormControlWidth" placeholder="opcjonalnie" [ngModelOptions]="{standalone: true}">
-    <button class = "btn btn-primary mt-3" style="float:right; width:100%" (click)= "addArticleToCompartment(articleId,quantity)"  (click)="modalRef.hide()"
+    <button *ngIf="knownCompartment === undefined" class = "btn btn-primary mt-3" style="float:right; width:100%" (click)= "addArticleToCompartment(articleId,quantity)"  (click)="modalRef.hide()"
             (click)="openModal(template4)">
+      Dodaj
+    </button>
+    <button *ngIf="knownCompartment != undefined" class = "btn btn-primary mt-3" style="float:right; width:100%" (click)= "addArticleToGivenCompartment(articleId,quantity)"  (click)="modalRef.hide()"
+            >
       Dodaj
     </button>
   </div>
@@ -100,8 +104,8 @@
 
 <ng-template #template3 >
   <div class="modal-header">
-    <h4 class="modal-title pull-left" style="font-size: 16px">Czy napewno chcesz usunąć przedmit {{articleEdit.name}}
-      o Id: {{articleEdit.id}} ?</h4>
+    <h4 class="modal-title pull-left" style="font-size: 16px">Czy napewno chcesz usunąć przedmit {{articleEdit?.name}}
+      o Id: {{articleEdit?.id}} ?</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>

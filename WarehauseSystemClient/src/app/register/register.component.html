@@ -1,8 +1,4 @@
-<div *ngIf="isSignedUp; else signupForm">
-  Rejestracja przebiegła pomyślnie. Proszę, zaloguj się.
-</div>
 
-<ng-template #signupForm>
   <div class="container" style="background-color: ghostwhite;width:70%; padding-top:21px;display: block;
        overflow: auto;">
     <div  style="max-width:350px;margin-right:auto; margin-left:auto">
@@ -78,4 +74,5 @@
       </form>
     </div>
   </div>
-</ng-template>
+
+  <div *ngIf = "added" class = "succed-add">Pomyślnie dodano użytkownika</div>

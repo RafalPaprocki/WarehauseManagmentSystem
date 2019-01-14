@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../auth/auth.service';
 import { SignUpInfo } from '../auth/signup-info';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -14,14 +15,14 @@ export class RegisterComponent implements OnInit {
   isSignedUp = false;
   isSignUpFailed = false;
   errorMessage = '';
+  added = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router : Router) { }
 
   ngOnInit() { }
 
   onSubmit() {
     console.log(this.form);
-debugger
     this.signupInfo = new SignUpInfo(
       this.form.name,
       this.form.surname,
@@ -36,6 +37,16 @@ debugger
         console.log(data);
         this.isSignedUp = true;
         this.isSignUpFailed = false;
+        let a = this;
+        a.added = true;
+
+        setTimeout(function () {
+            a.added = false;
+            a.router.navigateByUrl('/home', {skipLocationChange: true}).then(()=>
+              a.router.navigate(['/', 'signup']));
+              window.scrollTo(0,0);
+          },
+          1000);
       },
       error => {
         console.log(error);

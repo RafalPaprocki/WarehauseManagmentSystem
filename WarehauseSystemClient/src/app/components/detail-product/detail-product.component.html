@@ -1,5 +1,5 @@
 
-<div class = "container" style = "min-height:100vh;text-align: center; background-color: ghostwhite">
+<div *ngIf="displayContent" class = "container" style = "min-height:100vh;text-align: center; background-color: ghostwhite">
   <span>
     Sector {{sector}} skrytka numer {{compartment?.number}}
   </span>
@@ -10,9 +10,9 @@
   <div class = "article">
     <div class = "row">
       <div class="col-3">
-      <img style = "margin-top:20px;width:100px; height: 100px" src="../../../assets/empty.png">
+      <img *ngIf= "articles === undefined || articles === null" style = "margin-top:20px;width:100px; height: 100px" src="../../../assets/empty.png">
       </div>
-      <div class ="col-5">
+      <div class ="col-5" *ngIf ="articles != null && articles != undefined">
         <span>Zawartość:</span>
         <br>
         <span>Id artykułu = {{articles?.id}}</span>
@@ -21,18 +21,20 @@
         <br>
         <span>Nazwa = {{articles?.name}}</span>
         <br>
-        <span *ngIf = "articles?.width != null">Szerokość = {{articles?.width}}</span>
-        <br>
-        <span *ngIf = "articles?.heigh != null">Wysokość = {{articles?.heigh}}</span>
-        <br>
+        <span *ngIf = "articles?.width != null">Szerokość = {{articles?.width}} <br></span>
+        <span *ngIf = "articles?.heigh != null">Wysokość = {{articles?.heigh}}  <br></span>
         <span *ngIf = "articles?.descryption != null">Opis = {{articles?.descryption}}</span>
+      </div>
+      <div class ="col-5"  *ngIf ="articles === null || articles === undefined">
+        <div style="color:indianred; margin-top:8px">Obecnie w tej skrytce nie ma żadnych artykułów</div>
       </div>
     </div>
   </div>
 
   <div style="margin-top:7px" >
-    <button class="btn btn-primary" style = "margin-right:2px" (click)="openModal(template)">Odbierz atykuł</button>
-    <button class="btn btn-success" (click)="openModal(template2)">Dodaj artykuł do tej lokalizacji</button>
+    <button [disabled]="articles===null || articles ===undefined" class="btn btn-primary" style = "margin-right:2px" (click)="openModal(template)">Odbierz atykuł</button>
+    <button *ngIf="compartment?.articleQuantity != 0" class="btn btn-success" (click)="openModal(template2)">Dodaj artykuł do tej lokalizacji</button>
+    <button *ngIf="compartment?.articleQuantity === 0" class="btn btn-success" (click)="addToEmptyCompartment()" >Dodaj artykuł do tej lokalizacji</button>
   </div>
 
   <div class="mt-3 ml-3">
@@ -44,7 +46,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <div *ngIf = "quantity > compartment?.articleQuantity">Nie ma takiej ilości przedmiotów w magazynie</div>
+          <div class="error-message-modal" *ngIf = "quantity > compartment?.articleQuantity">Nie ma takiej ilości przedmiotów w magazynie</div>
           <input [(ngModel)]="quantity" type="number" class="form-control"
                  id="exampleFormControlWidth" placeholder="np.4" [ngModelOptions]="{standalone: true}">
           <button [disabled] = "quantity > compartment?.articleQuantity" class = "btn btn-primary mt-3" style="float:right; width:100%"
@@ -65,10 +67,15 @@
     </button>
   </div>
   <div class="modal-body">
+    <div class="error-message-modal" *ngIf = "1000 < compartment?.articleQuantity + quantity">W magazynie nie ma wystarczająco miejsca</div>
     <input [(ngModel)]="quantity" type="number" class="form-control"
            id="addArticlesToLocalization" placeholder="np.3" [ngModelOptions]="{standalone: true}">
-    <button class = "btn btn-success mt-3" style="float:right; width:100%" (click) = "updateArticleQuantity(quantity)" (click)="modalRef.hide()">
+    <button [disabled]="1000 < compartment?.articleQuantity + quantity" class = "btn btn-success mt-3" style="float:right; width:100%" (click) = "updateArticleQuantity(quantity)" (click)="modalRef.hide()">
       Dodaj
     </button>
   </div>
 </ng-template>
+
+<app-articles-list (articleIdComp)="addArticleToThisCompartment($event)"
+                   knownCompartment=true *ngIf="displayContent === false">
+</app-articles-list>

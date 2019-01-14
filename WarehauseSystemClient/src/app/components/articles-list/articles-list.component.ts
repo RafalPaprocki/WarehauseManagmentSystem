@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, TemplateRef} from '@angular/core';
 import {ArticleService} from "../../services/article.service";
 import {ArticleModel} from "../../model/article-model";
 import {ConfirmationService, Message} from "primeng/api";
@@ -15,6 +15,8 @@ import {Router} from "@angular/router";
 })
 export class ArticlesListComponent implements OnInit {
 
+  @Input() knownCompartment: boolean;
+  @Output() articleIdComp = new EventEmitter<any>()
   allArticles: Array<ArticleModel>;
   articleModel:ArticleModel;
   articleEdit:ArticleModel;
@@ -27,6 +29,7 @@ export class ArticlesListComponent implements OnInit {
               private modalService: BsModalService, private router: Router) { }
 
   ngOnInit() {
+    debugger
     this.articleModel = new ArticleModel();
     this.articleModel.name = "";
     this.articleEdit = new ArticleModel();
@@ -34,6 +37,7 @@ export class ArticlesListComponent implements OnInit {
       this.allArticles = data.content;
       console.log(this.allArticles);
     });
+    console.log(this.knownCompartment)
   }
 
   filtrArticlesList(){
@@ -72,16 +76,21 @@ export class ArticlesListComponent implements OnInit {
   updateArticle(){
     this.articleService.updateArticle(this.articleEdit.id.toString(), this.articleEdit).subscribe(data => {
         this.articleEdit = data;
-        location.reload();
+        this.articleService.getAllArticles().subscribe(data => {
+        this.allArticles = data.content;
+          window.scrollTo(0,0);
+      });
       }
     );
   }
 
   deleteArticle(id){
     this.articleService.deleteArticle(id.toString()).subscribe(data => {
-      this.articleEdit = data;
-      window.scrollTo(0,0);
-      location.reload();
+
+      this.articleService.getAllArticles().subscribe(data => {
+        this.allArticles = data.content;
+        window.scrollTo(0,0);
+      });
     })
   }
 
@@ -98,5 +107,15 @@ export class ArticlesListComponent implements OnInit {
   toCompartment(number, sector){
     let sec = sector.toString().split(' ')[1];
     this.router.navigate(['/', 'detail' , number.toString(), sec]);
+  }
+
+  addArticleToGivenCompartment(id, quantity){
+    let data:any = {
+      quantity,
+      id,
+    };
+
+    console.log(data);
+    this.articleIdComp.emit(data);
   }
 }

@@ -28,7 +28,7 @@ overflow: auto;">
       <div *ngFor = "let k of Arr(sectorHeight); let j = index;">
         <div style="text-align: center" *ngFor = "let k of Arr(sectorWidth).fill(1); let i = index">
           <div  routerLink="/detail/{{1 + j*sectorWidth + i}}/{{sectorName}}"
-                class="one-compartment" (mouseenter)="displayContentInCart($event,1 + j*sectorWidth + i, sectorName)"
+                class="one-compartment" style = "color:lightgray" (mouseenter)="displayContentInCart($event,1 + j*sectorWidth + i, sectorName)"
                 (mouseleave)="unvisibleCart()" >{{1 + j*sectorWidth + i}}
           </div>
         </div>

@@ -15,7 +15,7 @@ export class DetailProductComponent implements OnInit {
   public modalRef: BsModalRef;
   public compartment;
   public sector;
-
+  public displayContent = true;
   constructor(private route: ActivatedRoute,
               private articleService: ArticleService,
               private modalService: BsModalService,
@@ -48,7 +48,25 @@ export class DetailProductComponent implements OnInit {
     this.compartmentService.updateDefinedArticleQuantity(
       quantity, this.articleService.id.toString(), this.sector).subscribe( data =>{
         this.compartment.articleQuantity = data.articleQuantity;
+        this.compartment = data;
+        this.articles = this.compartment.article;
       }
     );
+  }
+
+  addToEmptyCompartment(){
+    this.displayContent = false;
+  }
+
+  addArticleToThisCompartment(data){
+    this.displayContent = true;
+    console.log(this.compartment.number)
+    console.log(data.id)
+    this.compartmentService.updateCompartmentWithArticle(data.quantity,
+     data.id,this.compartment.id).subscribe(data => {
+        this.compartment = data;
+        this.articles = data.article;
+    });
+
   }
 }
